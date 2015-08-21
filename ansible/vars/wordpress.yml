@@ -1,0 +1,10 @@
+---
+wp: { version: 4.3 }
+  # Ansible 2.0 adds checksum validation to the get_url module
+  # version: 4.3
+  # url: https://wordpress.org/wordpress-4.3.tar.gz
+  # sha1: 1e9046b584d4eaebac9e1f7292ca7003bfc8ffd7
+  # sha1_url: https://wordpress.org/wordpress-4.3.tar.gz.sha1
+  # md5: b11dcf18e512e44de5c48415eac9ae00
+  # md5_url: https://wordpress.org/wordpress-4.3.tar.gz.md5
+    

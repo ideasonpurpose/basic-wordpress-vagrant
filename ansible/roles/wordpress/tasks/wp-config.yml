@@ -1,0 +1,6 @@
+---
+
+- name: Write wp-config.php file with Vagrant defaults
+  template: 
+    src=wp-config.php.j2 
+    dest=/vagrant/site/wp-content.php

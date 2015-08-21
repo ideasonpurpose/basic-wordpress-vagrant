@@ -1,0 +1,4 @@
+---
+
+- include: wp-config.yml
+- include: database.yml

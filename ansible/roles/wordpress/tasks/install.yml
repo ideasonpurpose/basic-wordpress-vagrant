@@ -1,0 +1,18 @@
+---
+
+# TODO: Ansible 2.0 will support downloading and extracting in a single command. 
+#       Might not work though, since it would extract to a 'wordpress' directory
+#       and we're stripping that and dumping everything directly into /vagrant/site
+# - name: Download and extract WordPress
+#   unarchive: 
+#     src=https://wordpress.org/wordpress-{{ wp.version }}.tar.gz 
+#     dest=/vagrant/site
+#     copy=no
+
+- name: Download WordPress 
+  get_url: 
+    url=https://wordpress.org/wordpress-{{ wp.version }}.tar.gz
+    dest=/tmp/wordpress.tar.gz
+
+- name: Extract WordPress tar
+  shell: tar -xvzf /tmp/wordpress.tar.gz -C /vagrant/site/ --strip-components=1

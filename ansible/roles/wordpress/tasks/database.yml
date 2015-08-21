@@ -1,0 +1,27 @@
+---
+
+- name: Find MySQL dumpfiles in /vagrant/site/wp-content
+  stat: path=/vagrant/site/wp-content/mysql.sql
+  register: dumpfile
+
+- name: Find MySQL dumpfiles in /vagrant/site
+  stat: path=/vagrant/site/mysql.sql
+  register: dumpfile
+  when: not dumpfile.stat.exists
+
+- name: Find MySQL dumpfiles in /vagrant
+  stat: path=/vagrant/mysql.sql
+  register: dumpfile
+  when: not dumpfile.stat.exists
+
+- debug: var=dumpfile
+
+- name: Create Database
+  mysql_db: name={{ wp_config.db_name }} state=present
+
+- name: Load the dumpfile into the new database
+  mysql_db:
+    name={{ wp_config.db_name }}
+    state=import
+    target={{ dumpfile.stat.path }}
+  when: dumpfile.stat.exists
