@@ -23,3 +23,5 @@ The base box was generated from the  [ideasonpurpose/basic-wordpress-box](https:
 `vagrant plugin install vagrant-hostsupdater`
 
 * Instructions for [password-free Vagrant](https://gist.github.com/joemaller/41912f5d027a4adc7c14) (and how to [safely edit sudoers](http://stackoverflow.com/a/14101449))
+
+* [WP Migrate DB](https://wordpress.org/plugins/wp-migrate-db/) is a useful WordPress plugin for rewriting urls in a dumpfile. Very helpful when moving a production DB to a development environment.
