@@ -9,7 +9,7 @@ $hostname = "vagrant" if $hostname.empty?
 $hostname = $hostname.gsub(/(\.dev)*$/, '') + '.dev'
 
 Vagrant.configure(2) do |config|
-  config.vm.box = "basic-wp"
+  config.vm.box = "ideasonpurpose/basic-wp"
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
   config.vm.network "private_network", ip: "192.168.33.10"
