@@ -4,8 +4,8 @@
  * Vagrant overrides
  */
 
-define('WP_HOME', 'http://{{ ansible_hostname }}');
-// define('WP_SITEURL', getenv('WP_SITEURL'));  // necessary?
+define('WP_HOME', 'http://{{ site_name }}');
+define('WP_SITEURL', 'http://{{ site_name }}');
 
 
 /**
