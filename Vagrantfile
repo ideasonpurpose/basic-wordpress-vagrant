@@ -33,12 +33,7 @@ Vagrant.configure(2) do |config|
     ansible.playbook = "ansible/main.yml"
     # Set all Vagrant dependent vars here to override the playbook defaults
     ansible.extra_vars = {
-    #     vagrant: true,
-    #     dev: true,
-    #     root_user: "vagrant",
-    #     admin_user: "vagrant",
         site_name: $hostname,
-    #     site_root: "/vagrant_synced/" + $hostname,
     }
   end
 
@@ -49,7 +44,6 @@ Vagrant.configure(2) do |config|
     if hash open 2>/dev/null; then
       open "http://#{$hostname}"
     fi
-
   EOF
 
 end

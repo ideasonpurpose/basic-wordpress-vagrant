@@ -14,8 +14,6 @@
   register: dumpfile
   when: not dumpfile.stat.exists
 
-- debug: var=dumpfile
-
 - name: Create Database
   mysql_db: name={{ wp_config.db_name }} state=present
 
