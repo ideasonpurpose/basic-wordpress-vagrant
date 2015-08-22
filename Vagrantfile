@@ -2,24 +2,30 @@
 # vi: set ft=ruby :
 
 # If no hostname is set, use the sanitized name of the Vagrantfile's containing directory
-$hostname ||= File.basename(File.dirname(File.expand_path(__FILE__))).downcase.gsub(/[^a-z0-9]+/,'-').gsub(/^-+|-+$/,'')
+$hostname ||= File.basename(__dir__)
+        .downcase
+        .gsub(/(\.dev)*$/, '')  # strip .dev TLD if there
+        .gsub(/[^a-z0-9]+/,'-') # sanitize non-alphanumerics to hyphens
+        .gsub(/^-+|-+$/,'')     # strip leading or trailing hyphens (Ruby-style trim)
+
 # if that fails, fallback to 'vagrant'
 $hostname = "vagrant" if $hostname.empty?
+
 # add a fake-TLD '.dev' extension
 $hostname = $hostname.gsub(/(\.dev)*$/, '') + '.dev'
 
+$local_ip = "192.168.125.71"
+
 Vagrant.configure(2) do |config|
   config.vm.box = "ideasonpurpose/basic-wp"
-  # Create a private network, which allows host-only access to the machine
-  # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.33.10"
-  # config.vm.network "private_network", type: "dhcp"
-
   config.vm.hostname = $hostname
 
   if Vagrant.has_plugin? 'vagrant-hostsupdater'
     config.hostsupdater.remove_on_suspend = true
   end
+
+  config.vm.network "private_network", ip: $local_ip
+  # config.vm.network "private_network", type: "dhcp"
 
   config.vm.provider "virtualbox" do |v|
     # v.gui = true  # for debugging
@@ -40,10 +46,10 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "shell", inline: <<-EOF
     echo "Vagrant Box provisioned!"
-    echo "Local server address is http://#{$hostname}"
-    if hash open 2>/dev/null; then
-      open "http://#{$hostname}"
-    fi
+    echo "Local server address is http://#{host_or_ip}"
   EOF
+end
 
+def host_or_ip
+  (Vagrant.has_plugin? 'vagrant-hostsupdater') ? $hostname : $local_ip
 end

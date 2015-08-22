@@ -16,3 +16,10 @@ When the Vagrant environment is provisioned a fresh install of WordPress will be
 From a "cold boot" a Vagrant environment should be ready to go in about a minute. Other popular WordPress Vagrant projects take much, much longer. 
 
 The base box was generated from the  [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
+
+## Extras
+
+* The [vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater) plugin is highly recommended.  
+`vagrant plugin install vagrant-hostsupdater`
+
+* Instructions for [password-free Vagrant](https://gist.github.com/joemaller/41912f5d027a4adc7c14) (and how to [safely edit sudoers](http://stackoverflow.com/a/14101449))
