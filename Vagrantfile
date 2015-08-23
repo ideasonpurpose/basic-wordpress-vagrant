@@ -44,11 +44,13 @@ Vagrant.configure(2) do |config|
   end
 
 
-  config.vm.provision "shell", inline: <<-EOF
+  config.vm.provision "shell", privileged: false, inline: <<-EOF
     echo "Vagrant Box provisioned!"
     echo "Local server address is http://#{host_or_ip}"
   EOF
+
 end
+
 
 def host_or_ip
   (Vagrant.has_plugin? 'vagrant-hostsupdater') ? $hostname : $local_ip

@@ -25,3 +25,12 @@ The base box was generated from the  [ideasonpurpose/basic-wordpress-box](https:
 * Instructions for [password-free Vagrant](https://gist.github.com/joemaller/41912f5d027a4adc7c14) (and how to [safely edit sudoers](http://stackoverflow.com/a/14101449))
 
 * [WP Migrate DB](https://wordpress.org/plugins/wp-migrate-db/) is a useful WordPress plugin for rewriting urls in a dumpfile. Very helpful when moving a production DB to a development environment.
+
+## Additional Notes
+
+If you're using [WP Engine's .gitignore file](http://wpengine.com/git/), add the following so [Akismet](http://akismet.com) and [Hello Dolly](https://wordpress.org/plugins/hello-dolly/) aren't accidentally checked into our repository. Both are included in the default WordPress download. 
+
+    # additional files from standard wp install
+    /wp-content/plugins/akismet
+    /wp-content/plugins/hello.php
+
