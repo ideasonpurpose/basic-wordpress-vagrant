@@ -27,6 +27,8 @@ Vagrant.configure(2) do |config|
   config.vm.network "private_network", ip: $local_ip
   # config.vm.network "private_network", type: "dhcp"
 
+  config.vm.synced_folder ".", "/vagrant", owner:"www-data", group:"www-data", mount_options:["dmode=775", "fmode=775"]
+
   config.vm.provider "virtualbox" do |v|
     # v.gui = true  # for debugging
     v.customize ["modifyvm", :id, "--memory", 512] # GraphViz fails with less than 4 GB
