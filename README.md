@@ -34,3 +34,9 @@ If you're using [WP Engine's .gitignore file](http://wpengine.com/git/), add the
     /wp-content/plugins/akismet
     /wp-content/plugins/hello.php
 
+
+## About
+
+<a href="http://ideasonpurpose.com" ><svg width="100" height="70" viewbox="0 0 90 90" preserveAspectRatio="xMinYMin meet"><g class="logo" style="fill: #fd5500;"><ellipse cx="53.7637" cy="42.21435" rx="39.6729" ry="23.28625"></ellipse><ellipse cx="23.9539" cy="69.4332" rx="9.9182" ry="5.8217"></ellipse><ellipse cx="11.5226" cy="78.1609" rx="4.9591" ry="2.911"></ellipse></g></svg></a>
+This project is sponsored by [Ideas On Purpose](http://ideasonpurpose.com).
+
