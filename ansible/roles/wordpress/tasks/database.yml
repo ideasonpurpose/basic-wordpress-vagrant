@@ -1,25 +1,18 @@
 ---
 
-- name: Find MySQL dumpfiles in /vagrant/site/wp-content
-  stat: path=/vagrant/site/wp-content/mysql.sql
-  register: dumpfile
-
-- name: Find MySQL dumpfiles in /vagrant/site
-  stat: path=/vagrant/site/mysql.sql
-  register: dumpfile
-  when: not dumpfile.stat.exists
-
-- name: Find MySQL dumpfiles in /vagrant
-  stat: path=/vagrant/mysql.sql
-  register: dumpfile
-  when: not dumpfile.stat.exists
-
 - name: Create Database
   mysql_db: name={{ wp_config.db_name }} state=present
 
-- name: Load the dumpfile into the new database
+- name: Find MySQL dumpfiles
+  command: find /vagrant -type d -name "plugins" -prune -o -name "*.sql" -print
+  register: dumpfiles
+  
+- name: Found dumpfile
+  debug: "msg='Populating database from {{ dumpfiles.stdout_lines | last | relpath(\'/vagrant\')}}'"
+
+- name: Load dumpfile into the new database
   mysql_db:
     name={{ wp_config.db_name }}
     state=import
-    target={{ dumpfile.stat.path }}
-  when: dumpfile.stat.exists
+    target={{ dumpfiles.stdout_lines | last }}
+  when: dumpfiles.stdout_lines
