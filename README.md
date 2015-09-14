@@ -1,21 +1,25 @@
 # Basic WordPress Vagrant Environment
 
-A pre-configured WordPress [Vagrant](https://www.vagrantup.com) environment modeled after WP Engine's platform that's fast to spin up and easy to work with.
+An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after WP Engine's platform.
+
+### Requirements
+
+To use this environment, you will need [Vagrant][], [VirtualBox][] and [Ansible][] installed. (Ansible can be installed with [Homebrew][])
 
 ## Install and Build
 
 1. Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
 2. Unzip and rename the directory to `yoursite.dev`
-3. If you have a database dumpfile, rename it `mysql.sql` and copy it into the yoursite.dev directory
-4. Add your WordPress project to the `site` directory (replace site with a clone)
-4. run `vagrant up`
+3. Add your WordPress project to the `site` directory (or replace site with a clone)
+4. Copy a MySQL dumpfile somewhere. We'll find it and load it into the database
+5. Run `vagrant up`
 
-When the Vagrant environment is provisioned a fresh install of WordPress will be applied to the `site` directory. **Any changes to core files or default themes will be lost.** Those files should be sacrosanct anyway and this behavior is very much deliberate. 
+When the Vagrant environment is provisioned a fresh install of WordPress will be applied to the `site` directory. **Any changes to core files or default themes will be lost.** But those files should really never be changed anyway, this behavior is very much deliberate. 
 
 ## Advantages
-From a "cold boot" a Vagrant environment should be ready to go in about a minute. Other popular WordPress Vagrant projects take much, much longer. 
+From a "cold boot" a Vagrant environment should be ready to go in under a minute. Other popular WordPress Vagrant projects take much, much longer. 
 
-The base box was generated from the  [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
+The base box was generated from the [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
 
 ## Extras
 
@@ -38,6 +42,10 @@ If you're using [WP Engine's .gitignore file](http://wpengine.com/git/), add the
 ## About
 
 [![iop_logo](https://cloud.githubusercontent.com/assets/8320/9443542/944a8bce-4a4f-11e5-9d2f-54999b1687d5.png)][iop]  
-This project is sponsored by [Ideas On Purpose][iop]
+This project is sponsored by and used in production at [Ideas On Purpose][iop].
 
 [iop]: http://ideasonpurpose.com
+[vagrant]: https://www.vagrantup.com
+[virtualbox]: https://www.virtualbox.org
+[ansible]: http://docs.ansible.com/ansible/intro_installation.html
+[homebrew]: http://brew.sh
