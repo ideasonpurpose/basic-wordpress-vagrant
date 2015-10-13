@@ -4,7 +4,7 @@ An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after 
 
 ### Requirements
 
-To use this environment, you will need [Vagrant][], [VirtualBox][] and [Ansible][] installed. (Ansible can be installed with [Homebrew][])
+To use this environment, you will need [Vagrant][], [VirtualBox][] and [Ansible][] installed. (Ansible can be installed with [Homebrew][]: `brew install ansible`)
 
 ## Install and Build
 
