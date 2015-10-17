@@ -11,17 +11,19 @@ To use this environment, you will need [Vagrant][], [VirtualBox][] and [Ansible]
 1. Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
 2. Unzip and rename the directory to `yoursite.dev`
 3. Add your WordPress project to the `site` directory (or replace site with a clone)
-4. Copy a MySQL dumpfile somewhere. We'll find it and load it into the database
+4. Optionally copy a MySQL dumpfile into the project directory
 5. Run `vagrant up`
 
 When the Vagrant environment is provisioned a fresh install of WordPress will be applied to the `site` directory. **Any changes to core files or default themes will be lost.** But those files should really never be changed anyway, this behavior is very much deliberate. 
 
 ## Advantages
-From a "cold boot" a Vagrant environment should be ready to go in under a minute. Other popular WordPress Vagrant projects take much, much longer. 
+From a "cold boot" your new Vagrant environment should be ready to go in under a minute. Other popular WordPress Vagrant projects take much, much longer. 
 
 The base box was generated from the [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
 
 ## Extras
+
+For best results, the following additions are highly recommended. 
 
 * The [vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater) plugin is highly recommended.  
 `vagrant plugin install vagrant-hostsupdater`
@@ -32,12 +34,7 @@ The base box was generated from the [ideasonpurpose/basic-wordpress-box](https:/
 
 ## Additional Notes
 
-If you're using [WP Engine's .gitignore file](http://wpengine.com/git/), add the following so [Akismet](http://akismet.com) and [Hello Dolly](https://wordpress.org/plugins/hello-dolly/) aren't accidentally checked into our repository. Both are included in the default WordPress download. 
-
-    # additional files from standard wp install
-    /wp-content/plugins/akismet
-    /wp-content/plugins/hello.php
-
+An updated copy of [WP Engine's .gitignore file][gitignore] will be added to the site directory if there isn't a file there already. This will exclude all WordPress core files from Git. 
 
 ## About
 
@@ -49,3 +46,4 @@ This project is sponsored by and used in production at [Ideas On Purpose][iop].
 [virtualbox]: https://www.virtualbox.org
 [ansible]: http://docs.ansible.com/ansible/intro_installation.html
 [homebrew]: http://brew.sh
+[gitignore]: https://gist.github.com/joemaller/4f7518e0d04a82a3ca16
