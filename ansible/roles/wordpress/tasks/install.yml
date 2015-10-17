@@ -16,3 +16,8 @@
 
 - name: Extract WordPress tar
   shell: tar -xvzf /tmp/wordpress.tar.gz -C /vagrant/site/ --strip-components=1
+
+- name: Get WP Engine .gitignore file (if there isn't one already)
+  get_url: 
+    url=https://gist.githubusercontent.com/joemaller/4f7518e0d04a82a3ca16/raw/
+    dest=/vagrant/site/.gitignore
