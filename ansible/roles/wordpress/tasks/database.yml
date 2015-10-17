@@ -9,8 +9,14 @@
   
 - name: Found dumpfile
   debug: "msg='Populating database from {{ dumpfiles.stdout_lines | last | relpath(\'/vagrant\')}}'"
+  when: dumpfiles.stdout_lines
 
-- name: Load dumpfile into the new database
+- name: Create a new database
+  mysql_db:
+    name={{ wp_config.db_name }}
+    state=present
+  
+- name: Load dumpfile into the database
   mysql_db:
     name={{ wp_config.db_name }}
     state=import
