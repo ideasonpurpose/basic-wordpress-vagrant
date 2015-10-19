@@ -21,3 +21,12 @@
   get_url: 
     url=https://gist.githubusercontent.com/joemaller/4f7518e0d04a82a3ca16/raw/
     dest=/vagrant/site/.gitignore
+
+- name: WP Engine mu-plugins cleanup
+  file: path=/vagrant/site/wp-content/mu-plugins/{{ item }} state=absent
+  with_items: 
+    - force-strong-passwords
+    - slt-force-strong-passwords.php
+    - wpengine-common
+    - mu-plugin.php
+    - stop-long-comments.php
