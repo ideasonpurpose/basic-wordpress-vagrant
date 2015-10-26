@@ -36,13 +36,20 @@ Vagrant.configure(2) do |config|
     v.customize ["modifyvm", :id, "--ioapic", "on"]
   end
 
-  config.vm.provision "ansible" do |ansible|
-    # ansible.verbose = "vvvv"
-    ansible.playbook = "ansible/main.yml"
-    # Set all Vagrant dependent vars here to override the playbook defaults
-    ansible.extra_vars = {
-        site_name: $hostname,
-    }
+
+  if Vagrant::Util::Platform.windows?
+    config.vm.provision :shell do |sh|
+      sh.path = __dir__ + '/windows.sh')
+    end
+  else
+      config.vm.provision "ansible" do |ansible|
+        # ansible.verbose = "vvvv"
+        ansible.playbook = "ansible/main.yml"
+        # Set all Vagrant dependent vars here to override the playbook defaults
+        ansible.extra_vars = {
+            site_name: $hostname,
+        }
+      end
   end
 
 
