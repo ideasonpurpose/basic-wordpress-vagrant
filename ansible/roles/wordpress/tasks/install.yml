@@ -22,11 +22,19 @@
     url=https://gist.githubusercontent.com/joemaller/4f7518e0d04a82a3ca16/raw/
     dest=/vagrant/site/.gitignore
 
-- name: WP Engine mu-plugins cleanup
-  file: path=/vagrant/site/wp-content/mu-plugins/{{ item }} state=absent
+- name: Flywheel cleanup
+  file: path=/vagrant/site/{{ item }} state=absent
   with_items: 
-    - force-strong-passwords
-    - slt-force-strong-passwords.php
-    - wpengine-common
-    - mu-plugin.php
-    - stop-long-comments.php
+    - flywheel-config
+
+- name: WP Engine cleanup
+  file: path=/vagrant/site/wp-content/{{ item }} state=absent
+  with_items: 
+    - advanced-cache.php
+    - mu-plugins/force-strong-passwords
+    - mu-plugins/mu-plugin.php
+    - mu-plugins/slt-force-strong-passwords.php
+    - mu-plugins/stop-long-comments.php
+    - mu-plugins/wpengine-common
+    - plugins/hyperdb
+    - plugins/hyperdb-1-1
