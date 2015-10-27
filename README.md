@@ -1,12 +1,17 @@
 # Basic WordPress Vagrant Environment
 
-An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after WP Engine's platform.
+An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after managed WordPress hosting platforms like WP Engine and Flywheel.
 
-### Requirements
 
-To use this environment, you will need [Vagrant][], [VirtualBox][] and [Ansible][] installed. (Ansible can be installed with [Homebrew][]: `brew install ansible`)
+## Requirements
 
-## Install and Build
+To use this environment, you will need a Mac with [Vagrant][], [VirtualBox][] and [Ansible][] installed. (Ansible can be installed with [Homebrew][]: `brew install ansible`)  *Windows support is coming soon*
+
+## Advantages
+From a "cold boot" your new Vagrant environment should be ready to go in about a minute, if not faster. Other popular WordPress Vagrant projects take much, much longer. 
+
+
+## Instructions
 
 1. Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
 2. Unzip and rename the directory to `yoursite.dev`
@@ -16,10 +21,23 @@ To use this environment, you will need [Vagrant][], [VirtualBox][] and [Ansible]
 
 When the Vagrant environment is provisioned a fresh install of WordPress will be applied to the `site` directory. **Any changes to core files or default themes will be lost.** But those files should really never be changed anyway, this behavior is very much deliberate. 
 
-## Advantages
-From a "cold boot" your new Vagrant environment should be ready to go in under a minute. Other popular WordPress Vagrant projects take much, much longer. 
+#### WP Engine Specific Instructions
+1. Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
+2. Unzip and rename the directory to `yoursite.dev`
+3. Download a backup snapshot from your [WP Engine Dashboard](https://my.wpengine.com).
+4. Decompress the zip archive and rename the resulting directory to `site`
+5. Copy `site` into `yoursite.dev`, replacing the existing `site` directory.
+6. Run `vagrant up`
 
-The base box was generated from the [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
+
+#### Flywheel Specific Instructions
+
+1. Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
+2. Unzip and rename the directory to `yoursite.dev`
+3. Request a [backup snapshot](https://getflywheel.com/wordpress-support/details-about-backups-on-flywheel/) from Flywheel support. Flywheel backup archives contains a `backup.sql` database dumpfile and a `files` directory.
+4. Rename `files` to `site`
+5. Copy `site` and `backup.sql` into `yoursite.dev`, replacing the existing `site` directory.
+6. Run `vagrant up`
 
 ## Extras
 
@@ -34,7 +52,11 @@ For best results, the following additions are highly recommended.
 
 ## Additional Notes
 
-An updated copy of [WP Engine's .gitignore file][gitignore] will be added to the site directory if there isn't a file there already. This will exclude all WordPress core files from Git. 
+A [.gitignore file][gitignore] will be added to the site directory if one doesn't already exist. This file will exclude all WordPress core files from Git. 
+
+The base box was generated from the [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
+
+
 
 ## About
 
