@@ -5,7 +5,7 @@ An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after 
 
 ## Requirements
 
-To use this environment, you will need a Mac with [Vagrant][], [VirtualBox][] and [Ansible][] installed. (Ansible can be installed with [Homebrew][]: `brew install ansible`)  *Windows support is coming soon*
+To use this environment, [Vagrant][] and [VirtualBox][] should be installed. On Macs, also install Ansible with [Homebrew][]: `brew install ansible` *(Windows support is coming soon)*
 
 ## Advantages
 From a "cold boot" your new Vagrant environment should be ready to go in about a minute, if not faster. Other popular WordPress Vagrant projects take much, much longer. 
