@@ -1,6 +1,14 @@
 ---
 
-- name: Write wp-config.php file with Vagrant defaults
-  template: 
-    src=wp-config.php.j2 
-    dest=/vagrant/site/wp-config.php
+# Workaround for https://github.com/ansible/ansible/issues/9526
+# When Vagrant runs on Windows, the template can't seem to write
+# to the shared folder correctly, regardless of permissions.
+# Writing to /tmp and moving the file works around the problem.
+
+- name: Write Vagrant defaults to /tmp/wp-config.php
+  template:
+    src=wp-config.php.j2
+    dest=/tmp/wp-config.php
+
+- name: Move /tmp/wp-config.php to /vagrant/site/wp-config.php
+  command: mv /tmp/wp-config.php /vagrant/site/wp-config.php

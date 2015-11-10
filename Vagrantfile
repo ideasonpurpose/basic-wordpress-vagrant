@@ -27,20 +27,27 @@ Vagrant.configure(2) do |config|
   config.vm.network "private_network", ip: $local_ip
   # config.vm.network "private_network", type: "dhcp"
 
-  config.vm.synced_folder ".", "/vagrant", owner:"www-data", group:"www-data", mount_options:["dmode=775", "fmode=775"]
+  config.vm.synced_folder ".", "/vagrant", owner:"www-data", group:"www-data", mount_options:["dmode=775,fmode=664"]
 
   config.vm.provider "virtualbox" do |v|
     # v.gui = true  # for debugging
-    v.customize ["modifyvm", :id, "--memory", 512] # GraphViz fails with less than 4 GB
+    v.customize ["modifyvm", :id, "--memory", 512]
     v.customize ["modifyvm", :id, "--name", $hostname]
     v.customize ["modifyvm", :id, "--ioapic", "on"]
   end
 
 
   if Vagrant::Util::Platform.windows?
-    config.vm.provision :shell do |sh|
-      sh.path = __dir__ + '/windows.sh')
-    end
+    config.vm.provision "shell",
+      inline: <<-EOT
+        echo 'localhost connection=local site_name=#{$hostname}' > /tmp/hosts
+        cd /vagrant
+        ansible-playbook ansible/main.yml -i /tmp/hosts
+        rm -rf /tmp/hosts
+      EOT
+
+    # config.vm.provision "shell", path: __dir__ + '/windows.sh'
+
   else
       config.vm.provision "ansible" do |ansible|
         # ansible.verbose = "vvvv"
