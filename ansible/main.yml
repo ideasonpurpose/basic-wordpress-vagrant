@@ -7,11 +7,5 @@
     - defaults/main.yml
     - vars/wordpress.yml
 
-  pre_tasks:
-    - debug: var=hostvars
-      sudo: no
-    - debug: var=vars
-      sudo: no
-
   roles:
     - wordpress

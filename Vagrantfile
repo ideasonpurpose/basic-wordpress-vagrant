@@ -38,16 +38,13 @@ Vagrant.configure(2) do |config|
 
 
   if Vagrant::Util::Platform.windows?
-    config.vm.provision "shell",
-      inline: <<-EOT
-        echo 'localhost connection=local site_name=#{$hostname}' > /tmp/hosts
-        cd /vagrant
-        ansible-playbook ansible/main.yml -i /tmp/hosts
-        rm -rf /tmp/hosts
-      EOT
-
-    # config.vm.provision "shell", path: __dir__ + '/windows.sh'
-
+    config.vm.provision "shell", privileged: false, inline: <<-EOT
+      export ANSIBLE_FORCE_COLOR=true
+      echo 'localhost ansible_connection=local site_name=#{$hostname}' > /tmp/hosts
+      cd /vagrant
+      ansible-playbook ansible/main.yml -i /tmp/hosts
+      rm -rf /tmp/hosts
+    EOT
   else
       config.vm.provision "ansible" do |ansible|
         # ansible.verbose = "vvvv"
