@@ -43,8 +43,8 @@ When the Vagrant environment is provisioned a fresh install of WordPress will be
 
 For best results, the following additions are highly recommended. 
 
-* The [vagrant-hostsupdater](https://github.com/cogitatio/vagrant-hostsupdater) plugin is highly recommended.  
-`vagrant plugin install vagrant-hostsupdater`
+* The [vagrant-hostmanager](https://github.com/smdahlen/vagrant-hostmanager) plugin is highly recommended.  
+`vagrant plugin install vagrant-hostmanager`
 
 * Instructions for [password-free Vagrant](https://gist.github.com/joemaller/41912f5d027a4adc7c14) (and how to [safely edit sudoers](http://stackoverflow.com/a/14101449))
 
@@ -52,7 +52,7 @@ For best results, the following additions are highly recommended.
 
 ## Additional Notes
 
-A [.gitignore file][gitignore] will be added to the site directory if one doesn't already exist. This file will exclude all WordPress core files from Git. 
+A [.gitignore file][gitignore] will be added to the site directory if one doesn't already exist. This file excludes all WordPress core files from Git.
 
 The base box was generated from the [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
 

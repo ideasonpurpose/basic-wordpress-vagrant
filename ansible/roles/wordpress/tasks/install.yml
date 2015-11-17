@@ -11,8 +11,17 @@
 
 - name: Download WordPress 
   get_url: 
-    url=https://wordpress.org/wordpress-{{ wp.version }}.tar.gz
+    url=https://wordpress.org/latest.tar.gz
     dest=/tmp/wordpress.tar.gz
+    # url=https://wordpress.org/wordpress-{{ wp.version }}.tar.gz
+
+- name: Make sure /site directory exists
+  file: 
+    path=/vagrant/site 
+    state=directory 
+    owner=www-data 
+    group=www-data 
+    mode=0755
 
 - name: Extract WordPress tar
   shell: tar -xvzf /tmp/wordpress.tar.gz -C /vagrant/site/ --strip-components=1

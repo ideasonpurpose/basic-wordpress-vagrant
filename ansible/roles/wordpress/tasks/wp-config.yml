@@ -1,5 +1,11 @@
 ---
 
+- name: get VM's IP Address
+  shell: hostname -I | cut -f2 -d' '
+  register: ip_addr
+
+- set_fact: site_addr={{ site_name or ip_addr.stdout }}
+
 # Workaround for https://github.com/ansible/ansible/issues/9526
 # When Vagrant runs on Windows, the template can't seem to write
 # to the shared folder correctly, regardless of permissions.
