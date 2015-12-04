@@ -1,11 +1,19 @@
 ---
-wp: { version: 4.3.1 }
-  # TODO: Ansible 2.0 adds checksum validation to the get_url module
-  # https://wordpress.org/download/release-archive/
-  # version: 4.3.1
-  # url: https://wordpress.org/wordpress-4.3.tar.gz
-  # sha1: b2e5652a6d2333cabe7b37459362a3e5b8b66221
-  # sha1_url: https://wordpress.org/wordpress-4.3.1.tar.gz.sha1
-  # md5: de8004fa1035817435eaa780a681aaff
-  # md5_url: https://wordpress.org/wordpress-4.3.1.tar.gz.md5
-    
+
+# Install a different version of WordPress
+# This project can use any past or future version of WordPress available 
+# from the WordPress Release Archive -- even Nightly builds. 
+# 
+# Remember the only version of WordPress which is considered "safe to use"
+# is the latest release.
+#
+# Uncomment any of the following lines to change your WordPress version
+# wp_download: https://wordpress.org/latest.zip  # Current release (default)
+# wp_download: https://wordpress.org/nightly-builds/wordpress-latest.zip  Latest nightly build
+# wp_download: https://wordpress.org/wordpress-4.4-RC1.tar.gz  Version 4.4 Release Candidate
+# wp_download: https://wordpress.org/wordpress-4.3.tar.gz  Version 4.3
+# wp_download: https://wordpress.org/wordpress-4.1.8.tar.gz  Version 4.1.8
+
+# Attempt to install missing plugins
+# Uncomment to skip installing missing plugins
+# install_plugins: no

@@ -16,6 +16,7 @@ $hostname = $hostname.gsub(/(\.dev)*$/, '') + '.dev'
 
 Vagrant.configure(2) do |config|
   config.vm.box = "ideasonpurpose/basic-wp"
+  config.vm.box_version = ">= 0.0.9"
   config.vm.hostname = $hostname
   config.vm.network "private_network", type: "dhcp"
 
@@ -28,28 +29,26 @@ Vagrant.configure(2) do |config|
     v.customize ["modifyvm", :id, "--ioapic", "on"]
   end
 
-
   if Vagrant::Util::Platform.windows?
+    $site_name = (Vagrant.has_plugin? 'vagrant-hostmanager') ? 'site_name=#{$hostname}' : ''
     config.vm.provision "Running Ansible inside the VM", type: "shell", privileged: false, inline: <<-EOT
       export ANSIBLE_FORCE_COLOR=true
-      echo 'localhost ansible_connection=local site_name=#{$hostname}' > /tmp/hosts
+      echo 'localhost ansible_connection=local #{$site_name}' > /tmp/hosts
       cd /vagrant
       ansible-playbook ansible/main.yml -i /tmp/hosts
       rm -rf /tmp/hosts
     EOT
   else
-      config.vm.provision "ansible" do |ansible|
+    config.vm.provision "ansible" do |ansible|
         # ansible.verbose = "vvvv"
         ansible.playbook = "ansible/main.yml"
         # Set all Vagrant dependent vars here to override the playbook defaults
         ansible.extra_vars = {
-            site_name: (Vagrant.has_plugin? 'vagrant-hostmanager') ? $hostname : nil
+          site_name: (Vagrant.has_plugin? 'vagrant-hostmanager') ? $hostname : nil,
+          vagrant_cwd: File.expand_path(__dir__)
         }
       end
-  end
-
-  # puts @machine.name
-  # puts config.vm.name
+    end
 
   if Vagrant.has_plugin? 'vagrant-hostmanager'
     config.vm.provision :hostmanager

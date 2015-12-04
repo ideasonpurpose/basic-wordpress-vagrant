@@ -1,30 +1,40 @@
 ---
 
 # TODO: Ansible 2.0 will support downloading and extracting in a single command. 
-#       Might not work though, since it would extract to a 'wordpress' directory
-#       and we're stripping that and dumping everything directly into /vagrant/site
 # - name: Download and extract WordPress
 #   unarchive: 
 #     src=https://wordpress.org/wordpress-{{ wp.version }}.tar.gz 
-#     dest=/vagrant/site
+#     dest=/tmp
 #     copy=no
 
-- name: Download WordPress 
-  get_url: 
-    url=https://wordpress.org/latest.tar.gz
-    dest=/tmp/wordpress.tar.gz
-    # url=https://wordpress.org/wordpress-{{ wp.version }}.tar.gz
-
 - name: Make sure /site directory exists
+  connection: local
+  sudo: no
   file: 
-    path=/vagrant/site 
+    path={{ vagrant_cwd }}/site
     state=directory 
-    owner=www-data 
-    group=www-data 
     mode=0755
 
-- name: Extract WordPress tar
-  shell: tar -xvzf /tmp/wordpress.tar.gz -C /vagrant/site/ --strip-components=1
+- name: Download fresh copy of WordPress
+  connection: local
+  sudo: no
+  get_url: 
+    url={{ wp_download | default('https://wordpress.org/latest.tar.gz', true) }}
+    dest=/tmp/wordpress.zip
+    force=yes
+
+- name: Decompress WordPress archive
+  connection: local
+  sudo: no
+  unarchive: 
+    src=/tmp/wordpress.zip
+    dest=/tmp/
+    copy=no
+    
+- name: Sync fresh WordPress onto /site
+  connection: local
+  sudo: no
+  synchronize: src=/tmp/wordpress/ dest={{ vagrant_cwd }}/site/
 
 - name: Get WP Engine .gitignore file (if there isn't one already)
   get_url: 
