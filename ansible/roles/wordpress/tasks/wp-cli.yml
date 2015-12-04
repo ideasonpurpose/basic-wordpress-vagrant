@@ -1,0 +1,46 @@
+---
+
+# wp option will error out if the site hasn't been installed yet
+- name: scrape options from `wp option get active_plugins`
+  shell: wp option get active_plugins --format=json
+  sudo: no
+  register: wp_options
+  ignore_errors: yes
+  
+# sometimes wp-cli returns a clean array, other times it returns an object-array with gaps in the numeric keys
+- name: List Active plugins (from database) - object
+  when: install_plugins and (wp_options | success) and (wp_options.stdout | from_json is mapping)
+  set_fact: 
+    active_plugins: "{{ (wp_options.stdout | from_json).values() | map('dirname') | list }}"
+
+- name: List Active plugins (from database) - array
+  when: install_plugins and (wp_options | success) and (wp_options.stdout | from_json is not mapping)
+  set_fact: 
+    active_plugins: "{{ wp_options.stdout | from_json | map('dirname') | list }}"
+    
+- name: Check for installed plugins
+  shell: wp plugin list --status=active --format=json
+  sudo: no
+  register: plugin_list
+  when: install_plugins and (wp_options | success)
+
+- name: List installed plugins (in wp-content/plugins)
+  set_fact: 
+    installed_plugins: "{{ plugin_list.stdout | from_json | map(attribute='name') | list }}"
+  when: install_plugins and (wp_options | success)
+
+- name: Get missing plugins
+  set_fact: 
+    missing_plugins: "{{ active_plugins | difference(installed_plugins) }}"
+  when: install_plugins and (wp_options | success)
+
+- name: Attempt to install missing plugins from WordPress.org
+  shell: wp plugin install {{ item }}
+  sudo: no
+  with_items: missing_plugins
+  when: install_plugins and (wp_options | success) and missing_plugins
+
+- name: update .htaccess rewrite rules
+  shell: wp rewrite flush --hard  chdir=/vagrant/site
+  sudo: no
+  when: wp_options | success
