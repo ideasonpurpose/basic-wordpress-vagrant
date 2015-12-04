@@ -5,7 +5,10 @@ An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after 
 
 ## Requirements
 
-To use this environment, [Vagrant][] and [VirtualBox][] should be installed. On Macs, also install Ansible with [Homebrew][]: `brew install ansible` *(Windows support is coming soon)*
+[Vagrant][] and [VirtualBox][] must be installed. On Macs, also install Ansible with [Homebrew][]: `brew install ansible` *(Windows support is almost working)*
+
+The [vagrant-hostmanager](https://github.com/smdahlen/vagrant-hostmanager) plugin is highly recommended, but not required.  
+Installation is easy: `vagrant plugin install vagrant-hostmanager`
 
 ## Advantages
 From a "cold boot" your new Vagrant environment should be ready to go in about a minute, if not faster. Other popular WordPress Vagrant projects take much, much longer. 
@@ -34,21 +37,20 @@ When the Vagrant environment is provisioned a fresh install of WordPress will be
 
 1. Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
 2. Unzip and rename the directory to `yoursite.dev`
-3. Request a [backup snapshot](https://getflywheel.com/wordpress-support/details-about-backups-on-flywheel/) from Flywheel support. Flywheel backup archives contains a `backup.sql` database dumpfile and a `files` directory.
+3. Download a backup snapshot from your [Flywheel Dashboard](https://app.getflywheel.com). Flywheel backup archives contains a `backup.sql` database dumpfile and a `files` directory.
 4. Rename `files` to `site`
 5. Copy `site` and `backup.sql` into `yoursite.dev`, replacing the existing `site` directory.
 6. Run `vagrant up`
 
 ## Extras
 
-For best results, the following additions are highly recommended. 
+* Missing plugins will be installed if they can be found in the [WordPress Plugin Directory](https://wordpress.org/plugins/).
 
-* The [vagrant-hostmanager](https://github.com/smdahlen/vagrant-hostmanager) plugin is highly recommended.  
-`vagrant plugin install vagrant-hostmanager`
+* Specific versions of WordPress can be installed by editing [`ansible/vars/wordpress.yml`](https://github.com/ideasonpurpose/basic-wordpress-vagrant/blob/master/ansible/vars/wordpress.yml)
 
-* Instructions for [password-free Vagrant](https://gist.github.com/joemaller/41912f5d027a4adc7c14) (and how to [safely edit sudoers](http://stackoverflow.com/a/14101449))
+* Instructions for [password-free Vagrant](https://gist.github.com/joemaller/41912f5d027a4adc7c14) and how to [safely edit sudoers](http://stackoverflow.com/a/14101449).
 
-* [WP Migrate DB](https://wordpress.org/plugins/wp-migrate-db/) is a useful WordPress plugin for rewriting urls in a dumpfile. Very helpful when moving a production DB to a development environment.
+* [WP Migrate DB](https://wordpress.org/plugins/wp-migrate-db/) is a useful WordPress plugin for rewriting urls in a dumpfile. Very helpful when moving a production DB to a development environment. (Alternative suggestions are welcomed)
 
 ## Additional Notes
 
