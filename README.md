@@ -50,6 +50,8 @@ When the Vagrant environment is provisioned a fresh install of WordPress will be
 
 * Instructions for [password-free Vagrant](https://gist.github.com/joemaller/41912f5d027a4adc7c14) and how to [safely edit sudoers](http://stackoverflow.com/a/14101449).
 
+* File permissions are handled by managed hosts and may differ between projects. To ignore permissions for sites managed with Git, run this in your local repo: `git config core.filemode false`
+
 * [WP Migrate DB](https://wordpress.org/plugins/wp-migrate-db/) is a useful WordPress plugin for rewriting urls in a dumpfile. Very helpful when moving a production DB to a development environment. (Alternative suggestions are welcomed)
 
 ## Additional Notes
