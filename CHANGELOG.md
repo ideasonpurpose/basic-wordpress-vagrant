@@ -1,5 +1,10 @@
 # basic-wordpress-vagrant changelog
 
+## 0.0.10
+
+- Update playbooks for Ansible 2.0
+- WP Download now works with arbitrary filenames
+
 ## 0.0.9
 
 - Update to basic-wordpress-box v0.0.9
