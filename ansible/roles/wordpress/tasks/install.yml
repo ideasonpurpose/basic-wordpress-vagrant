@@ -1,45 +1,46 @@
 ---
 
-# TODO: Ansible 2.0 will support downloading and extracting in a single command. 
-# - name: Download and extract WordPress
-#   unarchive: 
-#     src=https://wordpress.org/wordpress-{{ wp.version }}.tar.gz 
-#     dest=/tmp
-#     copy=no
-
 - name: Make sure /site directory exists
   connection: local
-  sudo: no
+  become: no
   file: 
-    path={{ vagrant_cwd }}/site
-    state=directory 
-    mode=0755
+    path: '{{ vagrant_cwd }}/site'
+    state: directory 
+    mode: 0755
 
-- name: Download fresh copy of WordPress
+- name: Download and extract WordPress
   connection: local
-  sudo: no
-  get_url: 
-    url={{ wp_download | default('https://wordpress.org/latest.tar.gz', true) }}
-    dest=/tmp/wordpress.zip
-    force=yes
-
-- name: Decompress WordPress archive
-  connection: local
-  sudo: no
+  become: no
   unarchive: 
-    src=/tmp/wordpress.zip
-    dest=/tmp/
-    copy=no
+    src: "{{ wp_download | default('https://wordpress.org/latest.zip', true) }}"
+    dest: /tmp/
+    copy: no
+
+# - name: Download fresh copy of WordPress
+#   connection: local
+#   become: no
+#   get_url: 
+#     url: "{{ wp_download | default('https://wordpress.org/latest.zip', true) }}"
+#     dest: /tmp/wordpress.zip
+#     force: yes
+
+# - name: Decompress WordPress archive
+#   connection: local
+#   become: no
+#   unarchive: 
+#     src: /tmp/wordpress.zip
+#     dest: /tmp/
+#     copy: no
     
 - name: Sync fresh WordPress onto /site
   connection: local
-  sudo: no
+  become: no
   synchronize: src=/tmp/wordpress/ dest={{ vagrant_cwd }}/site/
 
 - name: Get WP Engine .gitignore file (if there isn't one already)
   get_url: 
-    url=https://gist.githubusercontent.com/joemaller/4f7518e0d04a82a3ca16/raw/
-    dest=/vagrant/site/.gitignore
+    url: 'https://gist.githubusercontent.com/joemaller/4f7518e0d04a82a3ca16/raw/'
+    dest: '/vagrant/site/.gitignore'
 
 - name: Flywheel cleanup
   file: path=/vagrant/site/{{ item }} state=absent

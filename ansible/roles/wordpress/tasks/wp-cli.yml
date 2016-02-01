@@ -3,7 +3,7 @@
 # wp option will error out if the site hasn't been installed yet
 - name: scrape options from `wp option get active_plugins`
   shell: wp option get active_plugins --format=json
-  sudo: no
+  become: no
   register: wp_options
   ignore_errors: yes
   
@@ -20,7 +20,7 @@
     
 - name: Check for installed plugins
   shell: wp plugin list --status=active --format=json
-  sudo: no
+  become: no
   register: plugin_list
   when: install_plugins and (wp_options | success)
 
@@ -36,11 +36,11 @@
 
 - name: Attempt to install missing plugins from WordPress.org
   shell: wp plugin install {{ item }}
-  sudo: no
+  become: no
   with_items: missing_plugins
   when: install_plugins and (wp_options | success) and missing_plugins
 
 - name: update .htaccess rewrite rules
   shell: wp rewrite flush --hard  chdir=/vagrant/site
-  sudo: no
+  become: no
   when: wp_options | success

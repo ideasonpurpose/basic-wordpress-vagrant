@@ -1,6 +1,6 @@
 ---
 
-- include: install.yml tags=install
+- include: install.yml
 - include: wp-config.yml
-- include: database.yml tags=database,db,mysql
-- include: wp-cli.yml tags=wp-cli,wpcli,cli
+- include: database.yml
+- include: wp-cli.yml
