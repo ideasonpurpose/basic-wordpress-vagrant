@@ -8,34 +8,27 @@
     state: directory 
     mode: 0755
 
+- command: mktemp -d /tmp/wordpress-XXXX
+  connection: local
+  become: no
+  register: wp_download_tmp
+
 - name: Download and extract WordPress
   connection: local
   become: no
   unarchive: 
     src: "{{ wp_download | default('https://wordpress.org/latest.zip', true) }}"
-    dest: /tmp/
+    dest: '{{ wp_download_tmp.stdout }}'
     copy: no
+    list_files: yes
+  register: wp_download
 
-# - name: Download fresh copy of WordPress
-#   connection: local
-#   become: no
-#   get_url: 
-#     url: "{{ wp_download | default('https://wordpress.org/latest.zip', true) }}"
-#     dest: /tmp/wordpress.zip
-#     force: yes
-
-# - name: Decompress WordPress archive
-#   connection: local
-#   become: no
-#   unarchive: 
-#     src: /tmp/wordpress.zip
-#     dest: /tmp/
-#     copy: no
-    
 - name: Sync fresh WordPress onto /site
   connection: local
   become: no
-  synchronize: src=/tmp/wordpress/ dest={{ vagrant_cwd }}/site/
+  synchronize: 
+    src: '{{ wp_download_tmp.stdout }}/{{ wp_download.files | first | dirname }}/'
+    dest: '{{ vagrant_cwd }}/site/'
 
 - name: Get WP Engine .gitignore file (if there isn't one already)
   get_url: 
@@ -43,12 +36,16 @@
     dest: '/vagrant/site/.gitignore'
 
 - name: Flywheel cleanup
-  file: path=/vagrant/site/{{ item }} state=absent
+  file: 
+    path: /vagrant/site/{{ item }}
+    state: absent
   with_items: 
     - flywheel-config
 
 - name: WP Engine cleanup
-  file: path=/vagrant/site/wp-content/{{ item }} state=absent
+  file: 
+    path: /vagrant/site/wp-content/{{ item }} 
+    state: absent
   with_items: 
     - advanced-cache.php
     - mu-plugins/force-strong-passwords
