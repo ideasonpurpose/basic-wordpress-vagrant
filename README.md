@@ -5,7 +5,7 @@ An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after 
 
 ## Requirements
 
-[Vagrant][] and [VirtualBox][] must be installed. On Macs, also install Ansible with [Homebrew][]: `brew install ansible` *(Windows support is almost working)* The [vagrant-hostmanager][] plugin is highly recommended, but not required.  
+[Vagrant][] and [VirtualBox][] must be installed. Mac users should also install Ansible with [Homebrew][]: `brew install ansible`. The [vagrant-hostmanager][] plugin is highly recommended, but not required.  *(Windows support is still in progress)*
 
 Complete [first-time setup instructions](#complete-one-time-setup-instructions) are below.
 
