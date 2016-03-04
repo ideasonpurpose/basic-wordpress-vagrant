@@ -5,10 +5,9 @@ An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after 
 
 ## Requirements
 
-[Vagrant][] and [VirtualBox][] must be installed. On Macs, also install Ansible with [Homebrew][]: `brew install ansible` *(Windows support is almost working)*
+[Vagrant][] and [VirtualBox][] must be installed. On Macs, also install Ansible with [Homebrew][]: `brew install ansible` *(Windows support is almost working)* The [vagrant-hostmanager][] plugin is highly recommended, but not required.  
 
-The [vagrant-hostmanager](https://github.com/smdahlen/vagrant-hostmanager) plugin is highly recommended, but not required.  
-Installation is easy: `vagrant plugin install vagrant-hostmanager`
+Complete [first-time setup instructions](#complete-one-time-setup-instructions) are below.
 
 ## Advantages
 From a "cold boot" your new Vagrant environment should be ready to go in about a minute, if not faster. Other popular WordPress Vagrant projects take much, much longer. 
@@ -42,6 +41,21 @@ When the Vagrant environment is provisioned a fresh install of WordPress will be
 5. Copy `site` and `backup.sql` into `yoursite.dev`, replacing the existing `site` directory.
 6. Run `vagrant up`
 
+
+## Complete, One-Time Setup Instructions
+
+Below are the complete steps necessary to use the Basic WordPress Vagrant Environment on a new computer. These steps should only need to be done once, but it's useful to review if something isn't working correctly. 
+
+1. Download the Vagrant installer from [vagrantup.com][vagrant] and install Vagrant.
+2. Download the VirtualBox installer from [virtualbox.org][virtualbox] and install VirtualBox.
+3. In the terminal, run `brew update`. If Homebrew is not installed, the one-line installation command is at the top of [Homebrew's website][homebrew].
+4. Still in the terminal, run `brew install ansible` to install [Ansible][].
+5. Finally, install the [Vagrant Host Manager plugin][vagrant-hostmanager] by running this command in the terminal:  
+   `vagrant plugin install vagrant-hostmanager`
+
+That's everything, now just follow the [Instructions](#instructions) to spin up your WordPress environment.
+
+
 ## Extras
 
 * Missing plugins will be installed if they can be found in the [WordPress Plugin Directory](https://wordpress.org/plugins/).
@@ -73,3 +87,4 @@ This project is sponsored by and used in production at [Ideas On Purpose][iop].
 [ansible]: http://docs.ansible.com/ansible/intro_installation.html
 [homebrew]: http://brew.sh
 [gitignore]: https://gist.github.com/joemaller/4f7518e0d04a82a3ca16
+[vagrant-hostmanager]: https://github.com/smdahlen/vagrant-hostmanager
