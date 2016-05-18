@@ -1,5 +1,10 @@
 # basic-wordpress-vagrant changelog
 
+## 0.0.11
+
+- Faster and smarter discovery of MySQL dumpfiles
+- Remove deprecation error when trying to discover plugins before installation
+
 ## 0.0.10
 
 - Update playbooks for Ansible 2.0
