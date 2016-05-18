@@ -8,6 +8,7 @@
   ignore_errors: yes
   
 # sometimes wp-cli returns a clean array, other times it returns an object-array with gaps in the numeric keys
+# Using `from_json is mapping` and `from_json is not mapping` handles either case
 - name: List Active plugins (from database) - object
   when: install_plugins and (wp_options | success) and (wp_options.stdout | from_json is mapping)
   set_fact: 
@@ -26,8 +27,7 @@
 
 - name: List installed plugins (in wp-content/plugins)
   set_fact: 
-    installed_plugins: "{{ plugin_list.stdout | from_json | map(attribute='name') | list }}"
-  when: install_plugins and (wp_options | success)
+    installed_plugins: "{{ plugin_list.stdout | default('[]') | from_json | map(attribute='name') | list }}"
 
 - name: Get missing plugins
   set_fact: 
@@ -37,7 +37,7 @@
 - name: Attempt to install missing plugins from WordPress.org
   shell: wp plugin install {{ item }}
   become: no
-  with_items: missing_plugins
+  with_items: '{{ missing_plugins | default([]) }}'
   when: install_plugins and (wp_options | success) and missing_plugins
 
 - name: update .htaccess rewrite rules
