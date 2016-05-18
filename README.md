@@ -72,6 +72,8 @@ That's everything, now just follow the [Instructions](#instructions) to spin up 
 
 A [.gitignore file][gitignore] will be added to the site directory if one doesn't already exist. This file excludes all WordPress core files from Git.
 
+The Ansible provisioner will search for MySQL dumpfiles in the top five levels of the project, ignoring WordPress core and common vendor directories. The top-most (first-found) dumpfile will be imported.
+
 The base box was generated from the [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
 
 
