@@ -5,7 +5,7 @@
 
   vars_files:
     - defaults/main.yml
-    - vars/wordpress.yml
+    - ../config.yml
 
   roles:
     - wordpress

@@ -1,0 +1,31 @@
+---
+# Use this file to override the Basic WordPress Vagrant project's default settings.
+#
+#
+# Install a different version of WordPress
+# This project can use any past or future version of WordPress available
+# from the WordPress Release Archive -- even Nightly builds.
+#
+#     Remember, the only version of WordPress considered "safe to use"
+#     is the latest release.
+#
+# Uncomment any of the following lines to change your WordPress version
+# wp_download: https://wordpress.org/latest.zip  # Current release (default)
+# wp_download: https://wordpress.org/nightly-builds/wordpress-latest.zip  # Latest nightly build
+# wp_download: https://wordpress.org/wordpress-4.5.1-RC2.zip  # Version 4.5.1, Second Release Candidate
+# wp_download: https://wordpress.org/wordpress-4.4.3.zip  Version 4.4.3
+# wp_download: https://wordpress.org/wordpress-4.1.8.zip  Version 4.1.8
+
+# Attempt installation of missing plugins
+# Uncomment to skip installing missing plugins
+# install_plugins: no
+
+# Relocate WordPress to a subdirectory
+# Enter a subdirectory relative to your web root (/vagrant)
+# Setting wp_dir will not update your webroot, so you will need to navigate down to your WP install
+# wp_dir: wordpress
+
+# Rename the wp-content directory. Roots.io style installs rename wp-content to '/app'.
+# This is an advanced setting, you will need to manually populate the alternate wp-content
+# directory. The path will be created if it doesn't exist.
+# wp_content: app
