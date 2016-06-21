@@ -1,50 +1,69 @@
 ---
 
-- name: Make sure /site directory exists
+- debug: var=vagrant_local_webroot
+- debug: var=vagrant_local_wp_root
+
+
+- name: Make sure local WordPress directory exists
   connection: local
   become: no
   file: 
-    path: '{{ vagrant_cwd }}/site'
+    path: '{{ vagrant_local_wp_root }}'
     state: directory 
     mode: 0755
 
-- command: mktemp -d /tmp/wordpress-XXXX
+# - command: mktemp -d /tmp/wordpress-XXXX
+#   connection: local
+#   become: no
+#   register: wp_download_tmp
+
+- name: Create download cache directory
   connection: local
   become: no
+  file:
+    path: /tmp/wordpress-{{ ansible_date_time.date }}-{{ ansible_date_time.hour }}
+    state: directory
   register: wp_download_tmp
 
+- debug: msg="{{ lookup('pipe', 'ls -1 {{wp_download_tmp.path}}' )}}"
+    
 - name: Download and extract WordPress
   connection: local
   become: no
   unarchive: 
     src: "{{ wp_download | default('https://wordpress.org/latest.zip', true) }}"
-    dest: '{{ wp_download_tmp.stdout }}'
+    dest: '{{ wp_download_tmp.path }}'
+    creates: '{{ wp_download_tmp.path }}/wordpress'
     copy: no
     list_files: yes
   register: wp_download
-
-- name: Sync fresh WordPress onto /site
+    
+- name: Sync fresh WordPress onto {{ wp_dir }}
   connection: local
   become: no
   synchronize: 
-    src: '{{ wp_download_tmp.stdout }}/{{ wp_download.files | first | dirname }}/'
-    dest: '{{ vagrant_cwd }}/site/'
+    src: "{{wp_download_tmp.path}}/{{ lookup('pipe', 'ls -1 {{wp_download_tmp.path}}' )}}/"
+    dest: '{{ vagrant_local_wp_root }}/'
 
 - name: Get WP Engine .gitignore file (if there isn't one already)
   get_url: 
     url: 'https://gist.githubusercontent.com/joemaller/4f7518e0d04a82a3ca16/raw/'
-    dest: '/vagrant/site/.gitignore'
+    dest: '{{ wp_root }}/.gitignore'
+    
+    
+# TODO: Need to write the index.php file to vagrant_local_webroot and point to wherever Wordpress was installed    
 
+# TODO: Break these out into provider specific includes
 - name: Flywheel cleanup
   file: 
-    path: /vagrant/site/{{ item }}
+    path: '{{ web_root }}/{{ item }}'
     state: absent
   with_items: 
     - flywheel-config
 
 - name: WP Engine cleanup
   file: 
-    path: /vagrant/site/wp-content/{{ item }} 
+    path: '{{ wp_root }}/{{ wp_content }}/{{ item }} '
     state: absent
   with_items: 
     - advanced-cache.php

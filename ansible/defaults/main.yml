@@ -1,7 +1,17 @@
 ---
 install_plugins: yes
 
+cwd: '/vagrant'
+web_dir: 'site'
+web_root: '{{ cwd }}/{{ web_dir }}'
+
+wp_dir: ''
+wp_root: '{{ [web_root, wp_dir] | join("/") if wp_dir else web_root }}'
+wp_content: wp-content
+
 vagrant_cwd: /vagrant
+vagrant_local_webroot: '{{ vagrant_cwd }}/{{ web_dir }}'
+vagrant_local_wp_root: '{{ [vagrant_local_webroot, wp_dir] | join("/") if wp_dir else vagrant_local_webroot }}'
 
 wp_config: 
   db_name: wordpress

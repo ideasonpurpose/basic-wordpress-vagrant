@@ -11,10 +11,26 @@
 # to the shared folder correctly, regardless of permissions.
 # Writing to /tmp and moving the file works around the problem.
 
-- name: Write Vagrant defaults to /tmp/wp-config.php
-  template:
-    src=wp-config.php.j2
-    dest=/tmp/wp-config.php
+# - name: Write Vagrant defaults to /tmp/wp-config.php
+#   template:
+#     src=wp-config.php.j2
+#     dest=/tmp/wp-config.php
 
-- name: Move /tmp/wp-config.php to /vagrant/site/wp-config.php
-  command: mv /tmp/wp-config.php /vagrant/site/wp-config.php
+# - name: Move /tmp/wp-config.php to /vagrant/site/wp-config.php
+#   command: cp /tmp/wp-config.php {{ web_root }}/wp-config.php
+
+- name: Get WordPress config salts
+  connection: local
+  become: no
+  uri:
+    url: https://api.wordpress.org/secret-key/1.1/salt/
+    return_content: yes
+  register: wp_salts
+
+
+- name: Write Vagrant defaults to wp-config.php
+  connection: local
+  become: no
+  template:
+    src: wp-config.php.j2
+    dest: '{{ vagrant_local_wp_root }}/wp-config.php'

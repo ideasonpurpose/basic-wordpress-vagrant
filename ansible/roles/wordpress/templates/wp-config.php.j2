@@ -5,8 +5,21 @@
  */
 
 define('WP_HOME', 'http://{{ site_addr }}');
-define('WP_SITEURL', 'http://{{ site_addr }}');
+define('WP_SITEURL', 'http://{{ [site_addr, wp_dir] | join('/') if wp_dir else site_addr }}');
 define('WP_ENV', 'development');
+
+define('WP_CONTENT_DIR', '{{ wp_root }}/{{ wp_content }}');
+define('WP_CONTENT_URL', WP_SITEURL . '/{{ wp_content }}');
+
+/**
+ * Enable debugging
+ */
+define('WP_DEBUG', true);
+define('WP_DEBUG_LOG', true);
+define('WP_DEBUG_DISPLAY', true);
+define('SCRIPT_DEBUG', true);
+define('SAVEQUERIES', true);
+
 
 /**
  * The base configuration for WordPress
@@ -55,6 +68,9 @@ define('DB_COLLATE', '');
  *
  * @since 2.6.0
  */
+{% if wp_salts.content is defined %}
+{{ wp_salts.content}}
+{% else %}
 define('AUTH_KEY',         'put your unique phrase here');
 define('SECURE_AUTH_KEY',  'put your unique phrase here');
 define('LOGGED_IN_KEY',    'put your unique phrase here');
@@ -63,6 +79,7 @@ define('AUTH_SALT',        'put your unique phrase here');
 define('SECURE_AUTH_SALT', 'put your unique phrase here');
 define('LOGGED_IN_SALT',   'put your unique phrase here');
 define('NONCE_SALT',       'put your unique phrase here');
+{% endif %}
 
 /**#@-*/
 
