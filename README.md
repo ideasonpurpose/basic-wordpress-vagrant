@@ -5,7 +5,7 @@ An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after 
 
 ## Requirements
 
-[Vagrant][] and [VirtualBox][] must be installed. Mac users should also install Ansible with [Homebrew][]: `brew install ansible`. The [vagrant-hostmanager][] plugin is highly recommended, but not required.  *(Windows support is still in progress)*
+[Vagrant][] and [VirtualBox][] must be installed. Mac users should also install Ansible with [Homebrew][]: `brew install ansible`. The [vagrant-hostmanager][] plugin is highly recommended, but not required.  *(Windows support is still in progress  [#4][windows])*
 
 Complete [first-time setup instructions](#complete-one-time-setup-instructions) are below.
 
@@ -21,7 +21,7 @@ From a "cold boot" your new Vagrant environment should be ready to go in about a
 4. Optionally copy a MySQL dumpfile into the project directory
 5. Run `vagrant up`
 
-When the Vagrant environment is provisioned a fresh install of WordPress will be applied to the `site` directory. **Any changes to core files or default themes will be lost.** But those files should really never be changed anyway, this behavior is very much deliberate. 
+When the Vagrant environment is provisioned a fresh install of WordPress will be applied to the `site` directory. **Any changes to core files or default themes will be lost.** Those files should really never be changed anyway, and this decision is deliberate and intentional. 
 
 #### WP Engine Specific Instructions
 1. Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
@@ -42,6 +42,12 @@ When the Vagrant environment is provisioned a fresh install of WordPress will be
 6. Run `vagrant up`
 
 
+## Other Uses
+
+While this project's main goal is to provide a fast, standard WordPress development environment based on popular managed hosts, there are times where that just won't work. For sites installed in a subdirectory or using other custom file structure, there are options to help stage those as well.
+
+The [`config.yml`][] file includes `wp_dir` and `wp_content` settings which can be used to override the WordPress defaults
+
 ## Complete, One-Time Setup Instructions
 
 Below are the complete steps necessary to use the Basic WordPress Vagrant Environment on a new computer. These steps should only need to be done once, but it's useful to review if something isn't working correctly. 
@@ -55,24 +61,30 @@ Below are the complete steps necessary to use the Basic WordPress Vagrant Enviro
 
 That's everything, now just follow the [Instructions](#instructions) to spin up your WordPress environment.
 
+## Upgrading
+
+One of our goals for this project was to promote [disposability](http://12factor.net/disposability): A site should be able to be spun up and torn down quickly and dependably. Your site is just a dumpfile and whatever code exists in the `/site` folder. Everything outside of that should be replaceable. The only exception would be site-specific configurations in        [`config.yml`][config].
 
 ## Extras
 
 * Missing plugins will be installed if they can be found in the [WordPress Plugin Directory](https://wordpress.org/plugins/).
 
-* Specific versions of WordPress can be installed by editing [`ansible/vars/wordpress.yml`](https://github.com/ideasonpurpose/basic-wordpress-vagrant/blob/master/ansible/vars/wordpress.yml)
+* Specific versions of WordPress can be installed by editing [`config.yml`][config]
+
+* All settings for [Debugging in WordPress](https://codex.wordpress.org/Debugging_in_WordPress) are enabled.  
 
 * Instructions for [password-free Vagrant](https://gist.github.com/joemaller/41912f5d027a4adc7c14) and how to [safely edit sudoers](http://stackoverflow.com/a/14101449).
 
 * File permissions are handled by managed hosts and may differ between projects. To ignore permissions for sites managed with Git, run this in your local repo: `git config core.filemode false`
 
-* [WP Migrate DB](https://wordpress.org/plugins/wp-migrate-db/) is a useful WordPress plugin for rewriting urls in a dumpfile. Very helpful when moving a production DB to a development environment. (Alternative suggestions are welcomed)
 
 ## Additional Notes
 
-A [.gitignore file][gitignore] will be added to the site directory if one doesn't already exist. This file excludes all WordPress core files from Git.
+An extensive [.gitignore file][gitignore] will be added to the site directory if one doesn't already exist. This file excludes all WordPress core files from Git.
 
 The Ansible provisioner will search for MySQL dumpfiles in the top five levels of the project, ignoring WordPress core and common vendor directories. The top-most (first-found) dumpfile will be imported.
+
+To install WordPress in a subdirectory, set `wp_dir` in `config.yml`.
 
 The base box was generated from the [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
 
@@ -90,3 +102,5 @@ This project is sponsored by and used in production at [Ideas On Purpose][iop].
 [homebrew]: http://brew.sh
 [gitignore]: https://gist.github.com/joemaller/4f7518e0d04a82a3ca16
 [vagrant-hostmanager]: https://github.com/smdahlen/vagrant-hostmanager
+[config]: https://github.com/ideasonpurpose/basic-wordpress-vagrant/blob/master/ansible/config.yml
+[windows]: https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/4

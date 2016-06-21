@@ -1,5 +1,13 @@
 # basic-wordpress-vagrant changelog
 
+## 0.1.0
+- Configuration overrides moved into top-level `config.yml` file.
+- Subdirectory installations and custom naming structures are now supported
+- WordPress downloads are naively cached, refreshing hourly.
+- All WordPress debugging settings now enabled by default
+- Fresh [WordPress salts](https://api.wordpress.org/secret-key/1.1/salt) are now downloaded when a site is provisioned
+- basic-wordpress-box updated to v0.0.11
+
 ## 0.0.11
 
 - Faster and smarter discovery of MySQL dumpfiles

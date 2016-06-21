@@ -16,7 +16,7 @@ $hostname = $hostname.gsub(/(\.dev)*$/, '') + '.dev'
 
 Vagrant.configure(2) do |config|
   config.vm.box = "ideasonpurpose/basic-wp"
-  config.vm.box_version = ">= 0.0.9"
+  config.vm.box_version = ">= 0.0.11"
   config.vm.hostname = $hostname
   config.vm.network "private_network", type: "dhcp"
 
@@ -47,8 +47,8 @@ Vagrant.configure(2) do |config|
           site_name: (Vagrant.has_plugin? 'vagrant-hostmanager') ? $hostname : nil,
           vagrant_cwd: File.expand_path(__dir__)
         }
-      end
     end
+  end
 
   if Vagrant.has_plugin? 'vagrant-hostmanager'
     config.vm.provision :hostmanager
