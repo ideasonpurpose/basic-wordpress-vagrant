@@ -63,7 +63,7 @@
 
 - name: WP Engine cleanup
   file: 
-    path: '{{ wp_root }}/{{ wp_content }}/{{ item }} '
+    path: '{{ wp_root }}/{{ wp_content }}/{{ item }}'
     state: absent
   with_items: 
     - advanced-cache.php
