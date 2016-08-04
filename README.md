@@ -2,9 +2,19 @@
 
 An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after managed WordPress hosting platforms like WP Engine and Flywheel.
 
-<div style="border-left: 3px solid #3e9; margin 1em;">
-   <h2><em>Vagrant 1.8.5 is broken. Use Vagrant 1.8.4</em></h2><p><em>August 2016 &mdash; </em> There is an authentication bug in Vagrant 1.8.5 (current release) which causes <code>vagrant up</code> to timeout after a bunch of <code>default: Warning: Authentication failure. Retrying...</code> errors. (ref: <a href="https://github.com/mitchellh/vagrant/issues/7610">vagrant#7610</a>)</p><p>Downgrade to <a href="https://releases.hashicorp.com/vagrant/1.8.4/">Vagrant 1.8.4</a> and everything should work normally.</p>
-</div>
+
+## :bug: :bug: *Vagrant 1.8.5 is broken. Use Vagrant 1.8.4*
+   
+*August 2016 —* There is an authentication bug in Vagrant 1.8.5 (current release) which causes `vagrant up` to timeout after a bunch of these errors:
+
+```
+default: Warning: Authentication failure. Retrying...
+default: Warning: Authentication failure. Retrying...
+```
+
+Reference: mitchellh/vagrant#7610
+
+Downgrade to [Vagrant 1.8.4](https://releases.hashicorp.com/vagrant/1.8.4/) and everything should work normally. :+1:
 
 
 ## Requirements
