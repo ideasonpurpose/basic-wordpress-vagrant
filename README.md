@@ -5,14 +5,14 @@ An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after 
 
 > ## :bug:  *Vagrant 1.8.5 is broken. Use Vagrant 1.8.4* :bug:
 >    
-> *August 2016 —* There is an authentication bug in Vagrant 1.8.5 (current release) which causes `vagrant up` to timeout after a bunch of these errors:
+> *August 2016 —* There is an [authentication bug in Vagrant 1.8.5](https://github.com/mitchellh/vagrant/issues/7610) (current release) which causes `vagrant up` to timeout after a bunch of these errors:
 
 > ```
 > default: Warning: Authentication failure. Retrying...
 > default: Warning: Authentication failure. Retrying...
 > ```
 >
-> Reference: mitchellh/vagrant#7610
+> Reference: https://github.com/mitchellh/vagrant/issues/7610
 > 
 > Downgrade to [Vagrant 1.8.4](https://releases.hashicorp.com/vagrant/1.8.4/) and everything should work normally. :+1:
 
