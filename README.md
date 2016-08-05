@@ -15,6 +15,10 @@ An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after 
 > Reference: https://github.com/mitchellh/vagrant/issues/7610
 > 
 > Downgrade to [Vagrant 1.8.4](https://releases.hashicorp.com/vagrant/1.8.4/) and everything should work normally. :+1:
+> 
+> ...almost. :poop: **One last detail:** Vagrant 1.8.4 is not compatible with VirtualBox 5.1 ([vagrant#7578](https://github.com/mitchellh/vagrant/issues/7578)). Until Vagrant 1.8.6 is released, stick with [VirtualBox 5.0](https://www.virtualbox.org/wiki/Download_Old_Builds_5_0).
+> 
+> This is a particularly frustrating moment in the Vagrant/VirtualBox ecosystem. :weary:
 
 
 ## Requirements
