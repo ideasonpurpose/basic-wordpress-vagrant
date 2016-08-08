@@ -55,7 +55,7 @@ Vagrant.configure(2) do |config|
     config.hostmanager.enabled = false
     config.hostmanager.manage_host = true
     config.hostmanager.ip_resolver = proc do |vm, resolving_vm|
-      if vm.id
+      if vm.id && !Vagrant::Util::Platform.windows?
         %x(VBoxManage guestproperty get #{vm.id} "/VirtualBox/GuestInfo/Net/1/V4/IP").split()[1]
       end
     end
