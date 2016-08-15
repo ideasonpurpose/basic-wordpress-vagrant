@@ -1,6 +1,7 @@
 ---
 
 - include: install.yml
+- include: host-specific-cleanup.yml
 - include: wp-config.yml
 - include: database.yml
 - include: wp-cli.yml

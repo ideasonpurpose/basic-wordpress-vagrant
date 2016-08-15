@@ -1,9 +1,5 @@
 ---
 
-- debug: var=vagrant_local_webroot
-- debug: var=vagrant_local_wp_root
-
-
 - name: Make sure local WordPress directory exists
   connection: local
   become: no
@@ -11,11 +7,6 @@
     path: '{{ vagrant_local_wp_root }}'
     state: directory 
     mode: 0755
-
-# - command: mktemp -d /tmp/wordpress-XXXX
-#   connection: local
-#   become: no
-#   register: wp_download_tmp
 
 - name: Create download cache directory
   connection: local
@@ -25,25 +16,39 @@
     state: directory
   register: wp_download_tmp
 
-- debug: msg="{{ lookup('pipe', 'ls -1 {{wp_download_tmp.path}}' )}}"
-    
-- name: Download and extract WordPress
+- name: Clean remote WordPress Source directory
+  file:
+    path: /tmp/wordpress_BOO
+    state: absent
+  register: wp_src_dir
+
+- name: Create remote expansion directory
+  file:
+    path: '{{ wp_src_dir.path }}'
+    state: directory
+    mode: 0777
+
+- name: Download WordPress archive
   connection: local
+  become: no
+  get_url: 
+    url: "{{ wp_download | default('https://wordpress.org/latest.zip', true) }}"
+    dest: '{{ wp_download_tmp.path }}/wordpress_archive.zip'
+  register: wp_archive
+
+- name: Extract WordPress archive on remote host
   become: no
   unarchive: 
-    src: "{{ wp_download | default('https://wordpress.org/latest.zip', true) }}"
-    dest: '{{ wp_download_tmp.path }}'
-    creates: '{{ wp_download_tmp.path }}/wordpress'
-    copy: no
-    list_files: yes
-  register: wp_download
-    
-- name: Sync fresh WordPress onto {{ wp_dir }}
-  connection: local
+    src: '{{ wp_archive.dest }}'
+    dest: '{{ wp_src_dir.path }}'
+  register: wp_files
+
+- name: 'Pull-sync fresh WordPress onto local site directory'
   become: no
   synchronize: 
-    src: "{{wp_download_tmp.path}}/{{ lookup('pipe', 'ls -1 {{wp_download_tmp.path}}' )}}/"
+    src: '{{ wp_src_dir.path }}/wordpress/'
     dest: '{{ vagrant_local_wp_root }}/'
+    mode: pull
 
 - name: Get WP Engine .gitignore file (if there isn't one already)
   get_url: 
@@ -52,25 +57,3 @@
     
     
 # TODO: Need to write the index.php file to vagrant_local_webroot and point to wherever Wordpress was installed    
-
-# TODO: Break these out into provider specific includes
-- name: Flywheel cleanup
-  file: 
-    path: '{{ web_root }}/{{ item }}'
-    state: absent
-  with_items: 
-    - flywheel-config
-
-- name: WP Engine cleanup
-  file: 
-    path: '{{ wp_root }}/{{ wp_content }}/{{ item }}'
-    state: absent
-  with_items: 
-    - advanced-cache.php
-    - mu-plugins/force-strong-passwords
-    - mu-plugins/mu-plugin.php
-    - mu-plugins/slt-force-strong-passwords.php
-    - mu-plugins/stop-long-comments.php
-    - mu-plugins/wpengine-common
-    - plugins/hyperdb
-    - plugins/hyperdb-1-1

@@ -1,0 +1,22 @@
+---
+# TODO: Break these out into provider specific includes
+- name: Flywheel cleanup
+  file: 
+    path: '{{ web_root }}/{{ item }}'
+    state: absent
+  with_items: 
+    - flywheel-config
+
+- name: WP Engine cleanup
+  file: 
+    path: '{{ wp_root }}/{{ wp_content }}/{{ item }}'
+    state: absent
+  with_items: 
+    - advanced-cache.php
+    - mu-plugins/force-strong-passwords
+    - mu-plugins/mu-plugin.php
+    - mu-plugins/slt-force-strong-passwords.php
+    - mu-plugins/stop-long-comments.php
+    - mu-plugins/wpengine-common
+    - plugins/hyperdb
+    - plugins/hyperdb-1-1
