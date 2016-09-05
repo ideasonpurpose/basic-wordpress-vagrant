@@ -2,6 +2,10 @@
 
 An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after managed WordPress hosting platforms like WP Engine and Flywheel.
 
+## Advantages
+From a "cold boot" your WordPress Vagrant environment should be ready to go in about a minute, if not faster. Other WordPress Vagrant projects take much, much longer. 
+
+
 
 > ## :bug:  *Vagrant 1.8.5 is broken. Use Vagrant 1.8.4* :bug:
 >    
@@ -27,19 +31,18 @@ An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after 
 
 Complete [first-time setup instructions](#complete-one-time-setup-instructions) are below.
 
-## Advantages
-From a "cold boot" your new Vagrant environment should be ready to go in about a minute, if not faster. Other popular WordPress Vagrant projects take much, much longer. 
-
 
 ## Instructions
 
 1. Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
 2. Unzip and rename the directory to `yoursite.dev`
-3. Add your WordPress project to the `site` directory (or replace site with a clone)
+3. Add your WordPress project to the `site` directory (or replace `site` with a clone of your WordPress repository)
 4. Optionally copy a MySQL dumpfile into the project directory
 5. Run `vagrant up`
 
 When the Vagrant environment is provisioned a fresh install of WordPress will be applied to the `site` directory. **Any changes to core files or default themes will be lost.** Those files should really never be changed anyway, and this decision is deliberate and intentional. 
+
+To avoid being asked for a password on every `vagrant up` (when using the [vagrant-hostmanager][] plugin), [edit the sudoers file][visudo] and add the [ lines from this gist][sudoers].
 
 #### WP Engine Specific Instructions
 1. Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
@@ -64,11 +67,11 @@ When the Vagrant environment is provisioned a fresh install of WordPress will be
 
 While this project's main goal is to provide a fast, standard WordPress development environment based on popular managed hosts, there are times where that just won't work. For sites installed in a subdirectory or using other custom file structure, there are options to help stage those as well.
 
-The [`config.yml`][] file includes `wp_dir` and `wp_content` settings which can be used to override the WordPress defaults
+The [`config.yml`][config] file includes `wp_dir` and `wp_content` settings which can be used to override the WordPress defaults
 
 ## Complete, One-Time Setup Instructions
 
-Below are the complete steps necessary to use the Basic WordPress Vagrant Environment on a new computer. These steps should only need to be done once, but it's useful to review if something isn't working correctly. 
+Below are the complete steps necessary to use the Basic WordPress Vagrant Environment on a new Mac. These steps should only need to be done once, but it's useful to review if something isn't working correctly. 
 
 1. Download the Vagrant installer from [vagrantup.com][vagrant] and install Vagrant.
 2. Download the VirtualBox installer from [virtualbox.org][virtualbox] and install VirtualBox.
@@ -81,7 +84,7 @@ That's everything, now just follow the [Instructions](#instructions) to spin up 
 
 ## Upgrading
 
-One of our goals for this project was to promote [disposability](http://12factor.net/disposability): A site should be able to be spun up and torn down quickly and dependably. Your site is just a dumpfile and whatever code exists in the `/site` folder. Everything outside of that should be replaceable. The only exception would be site-specific configurations in        [`config.yml`][config].
+One of this project's goals is to promote [disposability](http://12factor.net/disposability): Developers should be able to spin up and tear down local development sites quickly and dependably. An ideal managed WordPress site is just a database dumpfile and whatever code exists in the `/site` folder. Everything outside of that should be replaceable. The only exception would be site-specific configurations in [`config.yml`][config].
 
 ## Extras
 
@@ -91,7 +94,7 @@ One of our goals for this project was to promote [disposability](http://12factor
 
 * All settings for [Debugging in WordPress](https://codex.wordpress.org/Debugging_in_WordPress) are enabled.  
 
-* Instructions for [password-free Vagrant](https://gist.github.com/joemaller/41912f5d027a4adc7c14) and how to [safely edit sudoers](http://stackoverflow.com/a/14101449).
+* Instructions for [password-free Vagrant][sudoers] and how to [safely edit sudoers][visudo].
 
 * File permissions are handled by managed hosts and may differ between projects. To ignore permissions for sites managed with Git, run this in your local repo: `git config core.filemode false`
 
@@ -100,7 +103,7 @@ One of our goals for this project was to promote [disposability](http://12factor
 
 An extensive [.gitignore file][gitignore] will be added to the site directory if one doesn't already exist. This file excludes all WordPress core files from Git.
 
-The Ansible provisioner will search for MySQL dumpfiles in the top five levels of the project, ignoring WordPress core and common vendor directories. The top-most (first-found) dumpfile will be imported.
+The Ansible provisioner will search for MySQL database dumpfiles in the top five levels of the project, ignoring WordPress core and common vendor directories. The top-most (first-found) database dumpfile will be imported.
 
 To install WordPress in a subdirectory, set `wp_dir` in `config.yml`.
 
@@ -122,3 +125,5 @@ This project is sponsored by and used in production at [Ideas On Purpose][iop].
 [vagrant-hostmanager]: https://github.com/smdahlen/vagrant-hostmanager
 [config]: https://github.com/ideasonpurpose/basic-wordpress-vagrant/blob/master/ansible/config.yml
 [windows]: https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/4
+[sudoers]: https://gist.github.com/joemaller/41912f5d027a4adc7c14
+[visudo]: http://stackoverflow.com/a/14101449
