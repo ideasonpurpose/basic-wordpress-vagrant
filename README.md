@@ -6,30 +6,13 @@ An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after 
 From a "cold boot" your WordPress Vagrant environment should be ready to go in about a minute, if not faster. Other WordPress Vagrant projects take much, much longer. 
 
 
-
-> ## :bug:  *Vagrant 1.8.5 is broken. Use Vagrant 1.8.4* :bug:
->    
-> *August 2016 —* There is an [authentication bug in Vagrant 1.8.5](https://github.com/mitchellh/vagrant/issues/7610) (current release) which causes `vagrant up` to timeout after a bunch of these errors:
-
-> ```
-> default: Warning: Authentication failure. Retrying...
-> default: Warning: Authentication failure. Retrying...
-> ```
->
-> Reference: https://github.com/mitchellh/vagrant/issues/7610
-> 
-> Downgrade to [Vagrant 1.8.4](https://releases.hashicorp.com/vagrant/1.8.4/) and everything should work normally. :+1:
-> 
-> ...almost. :poop: **One last detail:** Vagrant 1.8.4 is not compatible with VirtualBox 5.1 ([vagrant#7578](https://github.com/mitchellh/vagrant/issues/7578)). Until Vagrant 1.8.6 is released, stick with [VirtualBox 5.0](https://www.virtualbox.org/wiki/Download_Old_Builds_5_0).
-> 
-> This is a particularly frustrating moment in the Vagrant/VirtualBox ecosystem. :weary:
-
-
 ## Requirements
 
 [Vagrant][] and [VirtualBox][] must be installed. Mac users should also install Ansible with [Homebrew][]: `brew install ansible`. The [vagrant-hostmanager][] plugin is highly recommended, but not required.  *(Windows support is still in progress  [#4][windows])*
 
 Complete [first-time setup instructions](#complete-one-time-setup-instructions) are below.
+
+> *[Vagrant 1.8.6](https://releases.hashicorp.com/vagrant/1.8.6/)  (released September 27, 2016) fixed a number of bugs with recent VirtualBox releases and VM authentication. Be sure to update!*
 
 
 ## Instructions
