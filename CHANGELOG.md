@@ -1,5 +1,10 @@
 # basic-wordpress-vagrant changelog
 
+## 0.2.0
+- Added the [Kint PHP debugging helper](http://raveren.github.io/kint/)
+- Compatibility with Vagrant 1.8.6, Virtual Box 5.1.x and Ansible 2.2
+- Better [versioning with npm](https://github.com/joemaller/version-everything-with-npm)
+
 ## 0.1.0
 - Configuration overrides moved into top-level `config.yml` file.
 - Subdirectory installations and custom naming structures are now supported
