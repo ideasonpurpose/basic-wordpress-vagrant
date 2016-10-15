@@ -18,7 +18,7 @@
 
 - name: Clean remote WordPress Source directory
   file:
-    path: /tmp/wordpress_BOO
+    path: /tmp/wordpress
     state: absent
   register: wp_src_dir
 
@@ -50,7 +50,7 @@
     dest: '{{ vagrant_local_wp_root }}/'
     mode: pull
 
-- name: Get WP Engine .gitignore file (if there isn't one already)
+- name: Get master WordPress .gitignore file (if there isn't one already)
   get_url: 
     url: 'https://gist.githubusercontent.com/joemaller/4f7518e0d04a82a3ca16/raw/'
     dest: '{{ wp_root }}/.gitignore'
