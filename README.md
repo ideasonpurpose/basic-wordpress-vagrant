@@ -106,7 +106,7 @@ This project is sponsored by and used in production at [Ideas On Purpose][iop].
 [homebrew]: http://brew.sh
 [gitignore]: https://gist.github.com/joemaller/4f7518e0d04a82a3ca16
 [vagrant-hostmanager]: https://github.com/smdahlen/vagrant-hostmanager
-[config]: https://github.com/ideasonpurpose/basic-wordpress-vagrant/blob/master/ansible/config.yml
+[config]: https://github.com/ideasonpurpose/basic-wordpress-vagrant/blob/master/config.yml
 [windows]: https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/4
 [sudoers]: https://gist.github.com/joemaller/41912f5d027a4adc7c14
 [visudo]: http://stackoverflow.com/a/14101449
