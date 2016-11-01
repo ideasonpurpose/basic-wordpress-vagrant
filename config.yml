@@ -29,3 +29,6 @@
 # This is an advanced setting, you will need to manually populate the alternate wp-content
 # directory. The path will be created if it doesn't exist.
 # wp_content: app
+# 
+# Use this to disable xDebug in PHP. Defaults to 'yes'
+# enable_xdebug: no

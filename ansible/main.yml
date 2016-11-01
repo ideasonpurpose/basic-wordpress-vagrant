@@ -9,3 +9,30 @@
 
   roles:
     - wordpress
+
+  tasks: 
+    - name: Enable xDebug
+      command: phpenmod xdebug
+      when: enable_xdebug
+
+    - name: Disable xDebug
+      command: phpdismod xdebug
+      when: not enable_xdebug
+
+    # TODO: This should be a handler on the above tasks, not sure why it's not working
+    - name: restart apache2
+      service:
+        name: apache2
+        state: restarted
+
+    - name: Symlink XHProf display files into web root
+      file: 
+        src: /var/www/lib/xhprof/xhprof-master
+        dest: '{{ web_root }}/xhprof'
+        state: link
+
+    - name: Symlink Kint into web root
+      file: 
+        src: /var/www/lib/kint/kint-master
+        dest: '{{ web_root }}/kint'
+        state: link
