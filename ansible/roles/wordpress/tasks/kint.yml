@@ -1,51 +1,7 @@
 ---
 
-- name: Make sure local WordPress directory exists
-  connection: local
-  become: no
+- name: Symlink Kint into web root
   file: 
-    path: '{{ vagrant_local_wp_root }}'
-    state: directory 
-    mode: 0755
-
-- name: Create download cache directory
-  connection: local
-  become: no
-  file:
-    path: /tmp/wordpress-{{ ansible_date_time.date }}-{{ ansible_date_time.hour }}
-    state: directory
-  register: wp_download_tmp
-
-- name: Clean remote Kint Source directory
-  file:
-    path: /tmp/kint
-    state: absent
-  register: kint_src_dir
-
-- name: Create remote expansion directory
-  file:
-    path: '{{ kint_src_dir.path }}'
-    state: directory
-    mode: 0777
-
-- name: Download Kint archive
-  connection: local
-  become: no
-  get_url: 
-    url: 'https://github.com/raveren/kint/archive/master.zip'
-    dest: '{{ wp_download_tmp.path }}/kint-archive.zip'
-  register: kint_archive
-
-- name: Extract Kint archive on remote host
-  become: no
-  unarchive: 
-    src: '{{ kint_archive.dest }}'
-    dest: '{{ kint_src_dir.path }}'
-  register: wp_files
-
-- name: 'Pull-sync fresh Kint onto local site directory'
-  become: no
-  synchronize: 
-    src: '{{ kint_src_dir.path }}/kint-master/'
-    dest: '{{ vagrant_local_wp_root }}/kint/'
-    mode: pull
+    src: /var/www/lib/kint/kint-master
+    dest: '{{ web_root }}/kint'
+    state: link
