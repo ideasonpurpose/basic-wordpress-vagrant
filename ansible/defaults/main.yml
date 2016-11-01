@@ -19,3 +19,5 @@ wp_config:
   db_password: wordpress
   
 wp_download: https://wordpress.org/latest.zip
+
+enable_xdebug: yes

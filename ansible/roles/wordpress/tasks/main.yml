@@ -5,5 +5,3 @@
 - include: wp-config.yml
 - include: database.yml
 - include: wp-cli.yml
-- include: kint.yml
-- include: xhprof.yml
