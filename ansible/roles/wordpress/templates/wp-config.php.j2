@@ -14,17 +14,24 @@ define('WP_CONTENT_URL', WP_SITEURL . '/{{ wp_content }}');
 /**
  * Enable debugging
  */
-define('WP_DEBUG', true);
-define('WP_DEBUG_LOG', true);
-define('WP_DEBUG_DISPLAY', true);
-define('SCRIPT_DEBUG', true);
-define('SAVEQUERIES', true);
+if ( !defined('WP_DEBUG') )
+    define('WP_DEBUG', true);
+if ( !defined('WP_DEBUG_LOG') )
+    define('WP_DEBUG_LOG', true);
+if ( !defined('WP_DEBUG_DISPLAY') )
+    define('WP_DEBUG_DISPLAY', true);
+if ( !defined('SCRIPT_DEBUG') )
+    define('SCRIPT_DEBUG', true);
+if ( !defined('SAVEQUERIES') )
+    define('SAVEQUERIES', true);
 
 /**
  * Include the Kint PHP debugging helper
  * http://raveren.github.io/kint/
  */
-require_once('kint/Kint.class.php');
+
+require_once('{{ web_root }}/kint/Kint.class.php');
+
 
 
 /**
@@ -109,7 +116,7 @@ $table_prefix  = 'wp_';
  *
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
-define('WP_DEBUG', true);
+// define('WP_DEBUG', false);
 
 /* That's all, stop editing! Happy blogging. */
 
