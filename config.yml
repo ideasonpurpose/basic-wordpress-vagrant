@@ -47,3 +47,10 @@
 #
 # Use this to disable xDebug in PHP. Defaults to 'yes'
 # enable_xdebug: no
+
+
+# ----- Database Table Prefix -----
+#
+# Set a unique WordPress Database Table prefix.
+# Must contain only numbers, letters, and underscores
+# table_prefix: wp2_
