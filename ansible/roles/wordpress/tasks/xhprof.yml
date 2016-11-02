@@ -1,7 +1,0 @@
----
-
-- name: Symlink XHProf display files into web root
-  file: 
-    src: /var/www/lib/xhprof/xhprof-master
-    dest: '{{ web_root }}/xhprof'
-    state: link

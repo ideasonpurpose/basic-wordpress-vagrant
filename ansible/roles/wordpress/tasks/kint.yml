@@ -1,7 +1,0 @@
----
-
-- name: Symlink Kint into web root
-  file: 
-    src: /var/www/lib/kint/kint-master
-    dest: '{{ web_root }}/kint'
-    state: link
