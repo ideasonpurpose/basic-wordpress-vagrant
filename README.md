@@ -69,11 +69,26 @@ That's everything, now just follow the [Instructions](#instructions) to spin up 
 
 One of this project's goals is to promote [disposability](http://12factor.net/disposability): Developers should be able to spin up and tear down local development sites quickly and dependably. An ideal managed WordPress site is just a database dumpfile and whatever code exists in the `/site` folder. Everything outside of that should be replaceable. The only exception would be site-specific configurations in [`config.yml`][config].
 
+## Additional Settings and Customizations
+
+Many custom options can be set in [`config.yml`][config]:
+
+* `wp_download` can be used to install specific WordPress versions. 
+
+* `install_plugins` toggles automatic installation of missing plugins
+
+* `wp_dir` changes the install location of WordPress, use this to install WordPress into a subdirectory.
+
+* `wp_content` remaps the `wp-content` directory. Useful for working on roots.io style installations.
+
+* `enable_xdebug` toggles [xDebug][] display
+
+* `table_prefix` maps directly to the WordPress Database Table prefix in `wp-config.php`
+
+
 ## Extras
 
 * Missing plugins will be installed if they can be found in the [WordPress Plugin Directory](https://wordpress.org/plugins/).
-
-* Specific versions of WordPress can be installed by editing [`config.yml`][config]
 
 * All settings for [Debugging in WordPress](https://codex.wordpress.org/Debugging_in_WordPress) are enabled.  
 
@@ -87,8 +102,6 @@ One of this project's goals is to promote [disposability](http://12factor.net/di
 An extensive [.gitignore file][gitignore] will be added to the site directory if one doesn't already exist. This file excludes all WordPress core files from Git.
 
 The Ansible provisioner will search for MySQL database dumpfiles in the top five levels of the project, ignoring WordPress core and common vendor directories. The top-most (first-found) database dumpfile will be imported.
-
-To install WordPress in a subdirectory, set `wp_dir` in `config.yml`.
 
 The base box was generated from the [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
 
@@ -110,3 +123,4 @@ This project is sponsored by and used in production at [Ideas On Purpose][iop].
 [windows]: https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/4
 [sudoers]: https://gist.github.com/joemaller/41912f5d027a4adc7c14
 [visudo]: http://stackoverflow.com/a/14101449
+[xdebug]: https://xdebug.org/docs/

@@ -1,5 +1,12 @@
 # basic-wordpress-vagrant changelog
 
+## 0.3.0
+- Updated [basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) to v1.0.0, now running on PHP 7.0 and WP-CLI 0.25
+- Symlink Kint lib from the base box instead of downloading
+- Sylink XHProf display files from base box
+- Config option to disable xDebug
+- Documentation improvements
+
 ## 0.2.0
 - Added the [Kint PHP debugging helper](http://raveren.github.io/kint/)
 - Compatibility with Vagrant 1.8.6, Virtual Box 5.1.x and Ansible 2.2
@@ -11,7 +18,7 @@
 - WordPress downloads are naively cached, refreshing hourly.
 - All WordPress debugging settings now enabled by default
 - Fresh [WordPress salts](https://api.wordpress.org/secret-key/1.1/salt) are now downloaded when a site is provisioned
-- basic-wordpress-box updated to v0.0.11
+- [basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box)  updated to v0.0.11
 
 ## 0.0.11
 
@@ -25,7 +32,7 @@
 
 ## 0.0.9
 
-- Update to basic-wordpress-box v0.0.9
+- Update to [basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box)  v0.0.9
 - Attempt to install missing plugins from wordpress.org
 - generate .htaccess
 - other versions of WordPress can be installed
