@@ -14,6 +14,9 @@ $hostname = "vagrant" if $hostname.empty?
 # add a fake-TLD '.dev' extension
 $hostname = $hostname.gsub(/(\.dev)*$/, '') + '.dev'
 
+# Explicitly setting $hostname here will override everything above
+# $hostname = 'dev.example.com'
+
 Vagrant.configure(2) do |config|
   config.vm.box = "ideasonpurpose/basic-wp"
   config.vm.box_version = ">= 1.0.0"
