@@ -8,12 +8,12 @@ From a "cold boot" your WordPress Vagrant environment should be ready to go in a
 
 ## Requirements
 
-[Vagrant][] and [VirtualBox][] must be installed. Mac users should also install Ansible with [Homebrew][]: `brew install ansible`. The [vagrant-hostmanager][] plugin is highly recommended, but not required.  *(Please update to the latest releases)*
+[Vagrant][] and [VirtualBox][] must be installed. Mac users should also install Ansible with [Homebrew][]: `brew install ansible`. The [vagrant-hostmanager][] plugin is highly recommended, but not required.
 
 Complete [first-time setup instructions](#complete-one-time-setup-instructions) are below.
 
 ### Windows Support
-This project now runs successfully on Windows 10 when launched as an administrator. Two workflow issues remain unresolved, any help resolving these would be greatly appreciated: (see #4)
+This project now runs successfully on Windows 10 when launched as an administrator. Two workflow issues remain unresolved: (see [#4](https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/4))
 
 - [Vagrant Hostmanager][vagrant-hostmanager] silently fails to write to `etc/hosts`.
 - Microsoft Edge will not load websites from local IP addresses. IE11, Chrome and Firefox all work correctly. 
@@ -54,7 +54,7 @@ To avoid being asked for a password on every `vagrant up` (when using the [vagra
 
 While this project's main goal is to provide a fast, standard WordPress development environment based on popular managed hosts, there are times where that just won't work. For sites installed in a subdirectory or using other custom file structure, there are options to help stage those as well.
 
-The [`config.yml`][config] file includes `wp_dir` and `wp_content` settings which can be used to override the WordPress defaults
+The [`config.yml`][config] file includes `wp_dir` and `wp_content` settings which can be used to override the WordPress defaults.
 
 ## Complete, One-Time Setup Instructions
 
@@ -71,7 +71,7 @@ That's everything, now just follow the [Instructions](#instructions) to spin up 
 
 ## Upgrading
 
-One of this project's goals is to promote [disposability](http://12factor.net/disposability): Developers should be able to spin up and tear down local development sites quickly and dependably. An ideal managed WordPress site is just a database dumpfile and whatever code exists in the `/site` folder. Everything outside of that should be replaceable. The only exception would be site-specific configurations in [`config.yml`][config].
+One of this project's goals is to promote [disposability](http://12factor.net/disposability): Developers should be able to spin up and tear down local development sites quickly and dependably. An ideal managed WordPress site is just a database dumpfile and whatever code exists in the `wp-content` directory. Everything outside of that should be replaceable. The only exception would be site-specific configurations in [`config.yml`][config].
 
 ## Additional Settings and Customizations
 
