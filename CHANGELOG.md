@@ -3,7 +3,7 @@
 ## 0.3.0
 - Updated [basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) to v1.0.0, now running on PHP 7.0 and WP-CLI 0.25
 - Symlink Kint lib from the base box instead of downloading
-- Sylink XHProf display files from base box
+- Symlink XHProf display files from base box
 - Config option to disable xDebug
 - Documentation improvements
 
