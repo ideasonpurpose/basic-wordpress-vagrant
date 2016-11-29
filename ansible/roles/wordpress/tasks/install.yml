@@ -49,6 +49,7 @@
     src: '{{ wp_src_dir.path }}/wordpress/'
     dest: '{{ vagrant_local_wp_root }}/'
     mode: pull
+    use_ssh_args: yes
 
 - name: Get master WordPress .gitignore file (if there isn't one already)
   get_url: 
