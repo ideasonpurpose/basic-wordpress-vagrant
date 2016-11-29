@@ -8,11 +8,15 @@ From a "cold boot" your WordPress Vagrant environment should be ready to go in a
 
 ## Requirements
 
-[Vagrant][] and [VirtualBox][] must be installed. Mac users should also install Ansible with [Homebrew][]: `brew install ansible`. The [vagrant-hostmanager][] plugin is highly recommended, but not required.  *(Windows support is still in progress  [#4][windows])*
+[Vagrant][] and [VirtualBox][] must be installed. Mac users should also install Ansible with [Homebrew][]: `brew install ansible`. The [vagrant-hostmanager][] plugin is highly recommended, but not required.  *(Please update to the latest releases)*
 
 Complete [first-time setup instructions](#complete-one-time-setup-instructions) are below.
 
-> *[Vagrant 1.8.6](https://releases.hashicorp.com/vagrant/1.8.6/)  (released September 27, 2016) fixed a number of bugs with recent VirtualBox releases and VM authentication. Be sure to update!*
+### Windows Support
+This project now runs successfully on Windows 10 when launched as an administrator. Two workflow issues remain unresolved, any help resolving these would be greatly appreciated: (see #4)
+
+- [Vagrant Hostmanager][vagrant-hostmanager] silently fails to write to `etc/hosts`.
+- Microsoft Edge will not load websites from local IP addresses. IE11, Chrome and Firefox all work correctly. 
 
 
 ## Instructions
