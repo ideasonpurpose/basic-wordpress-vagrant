@@ -28,9 +28,12 @@ Vagrant.configure(2) do |config|
 
   config.vm.provider "virtualbox" do |v|
     # v.gui = true  # for debugging
-    v.customize ["modifyvm", :id, "--memory", 512]
+    v.customize ["modifyvm", :id, "--cpus", 1]
+    v.customize ["modifyvm", :id, "--memory", 1024]
+    v.customize ["modifyvm", :id, "--vram", 4]
     v.customize ["modifyvm", :id, "--name", $hostname]
     v.customize ["modifyvm", :id, "--ioapic", "on"]
+    v.customize ["modifyvm", :id, "--paravirtprovider", "kvm"]
   end
 
   if Vagrant::Util::Platform.windows?
