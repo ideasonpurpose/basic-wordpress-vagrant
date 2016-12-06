@@ -2,7 +2,7 @@
 
 # wp option will error out if the site hasn't been installed yet
 - name: scrape options from `wp option get active_plugins`
-  shell: wp option get active_plugins --format=json --path={{ wp_root }}
+  shell: wp option get active_plugins --format=json --path={{ wp_root }} --debug
   become: no
   register: wp_options
   ignore_errors: yes
@@ -20,7 +20,7 @@
     active_plugins: "{{ wp_options.stdout | from_json | map('dirname') | list }}"
     
 - name: Check for installed plugins
-  shell: wp plugin list --status=active --format=json --path={{ wp_root }}
+  shell: wp plugin list --status=active --format=json --path={{ wp_root }} --debug
   become: no
   register: plugin_list
   when: install_plugins and (wp_options | success)
@@ -35,12 +35,12 @@
   when: install_plugins and (wp_options | success)
 
 - name: Attempt to install missing plugins from WordPress.org
-  shell: wp plugin install {{ item }} --path={{ wp_root }}
+  shell: wp plugin install {{ item }} --path={{ wp_root }} --debug
   become: no
   with_items: '{{ missing_plugins | default([]) }}'
   when: install_plugins and (wp_options | success) and missing_plugins
 
 - name: update .htaccess rewrite rules
-  shell: wp rewrite flush --hard --path={{ wp_root }}  chdir=/vagrant/site
+  shell: wp rewrite flush --hard --path={{ wp_root }}  chdir={{ wp_root }} --debug
   become: no
   when: wp_options | success
