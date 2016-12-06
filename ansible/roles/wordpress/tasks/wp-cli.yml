@@ -10,12 +10,12 @@
 # sometimes wp-cli returns a clean array, other times it returns an object-array with gaps in the numeric keys
 # Using `from_json is mapping` and `from_json is not mapping` handles either case
 - name: List Active plugins (from database) - object
-  when: install_plugins and (wp_options | success) and (wp_options.stdout | from_json is mapping)
+  when: install_plugins and (wp_options | succeeded) and (wp_options.stdout | from_json is mapping)
   set_fact: 
     active_plugins: "{{ (wp_options.stdout | from_json).values() | map('dirname') | list }}"
 
 - name: List Active plugins (from database) - array
-  when: install_plugins and (wp_options | success) and (wp_options.stdout | from_json is not mapping)
+  when: install_plugins and (wp_options | succeeded) and (wp_options.stdout | from_json is not mapping)
   set_fact: 
     active_plugins: "{{ wp_options.stdout | from_json | map('dirname') | list }}"
     
@@ -23,24 +23,26 @@
   shell: wp plugin list --status=active --format=json --path={{ wp_root }} --debug
   become: no
   register: plugin_list
-  when: install_plugins and (wp_options | success)
+  when: install_plugins and (wp_options | succeeded)
+  ignore_errors: yes
 
 - name: List installed plugins (in wp-content/plugins)
   set_fact: 
     installed_plugins: "{{ plugin_list.stdout | default('[]') | from_json | map(attribute='name') | list }}"
+  when: plugin_list | succeeded
 
 - name: Get missing plugins
   set_fact: 
     missing_plugins: "{{ active_plugins | difference(installed_plugins) }}"
-  when: install_plugins and (wp_options | success)
+  when: install_plugins and (wp_options | succeeded) and (plugin_list | succeeded)
 
 - name: Attempt to install missing plugins from WordPress.org
   shell: wp plugin install {{ item }} --path={{ wp_root }} --debug
   become: no
   with_items: '{{ missing_plugins | default([]) }}'
-  when: install_plugins and (wp_options | success) and missing_plugins
+  when: install_plugins and (wp_options | succeeded) and missing_plugins
 
 - name: update .htaccess rewrite rules
   shell: wp rewrite flush --hard --path={{ wp_root }}  chdir={{ wp_root }} --debug
   become: no
-  when: wp_options | success
+  when: wp_options | succeeded
