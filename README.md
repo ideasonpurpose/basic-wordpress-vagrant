@@ -96,7 +96,7 @@ Many custom options can be set in [`config.yml`][config]:
 
 * All settings for [Debugging in WordPress](https://codex.wordpress.org/Debugging_in_WordPress) are enabled.  
 
-* Instructions for [password-free Vagrant][sudoers] and how to [safely edit sudoers][visudo].
+* Save [`vagrant-hostmanager-nopasswd`][sudoers] to `/etc/sudoers.d/` for password-free, host-managed `vagrant up`.
 
 * File permissions are handled by managed hosts and may differ between projects. To ignore permissions for sites managed with Git, run this in your local repo: `git config core.filemode false`
 
