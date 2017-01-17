@@ -2,7 +2,7 @@
 
 # wp option will error out if the site hasn't been installed yet
 - name: scrape options from `wp option get active_plugins`
-  shell: wp option get active_plugins --format=json --path={{ wp_root }} --debug
+  shell: wp option get active_plugins --format=json --path={{ wp_root }}
   become: no
   register: wp_options
   ignore_errors: yes
@@ -36,11 +36,14 @@
     missing_plugins: "{{ active_plugins | difference(installed_plugins) }}"
   when: install_plugins and (wp_options | succeeded) and (plugin_list | succeeded)
 
+- debug: var=missing_plugins
+
 - name: Attempt to install missing plugins from WordPress.org
   shell: wp plugin install {{ item }} --path={{ wp_root }} --debug
   become: no
   with_items: '{{ missing_plugins | default([]) }}'
   when: install_plugins and (wp_options | succeeded) and missing_plugins
+  ignore_errors: yes
 
 - name: update .htaccess rewrite rules
   shell: wp rewrite flush --hard --path={{ wp_root }}  chdir={{ wp_root }} --debug
