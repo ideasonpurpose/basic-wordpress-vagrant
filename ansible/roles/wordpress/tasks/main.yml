@@ -5,3 +5,4 @@
 - include: wp-config.yml
 - include: database.yml
 - include: wp-cli.yml
+  when: (dumpfiles is defined) and dumpfiles.stdout_lines

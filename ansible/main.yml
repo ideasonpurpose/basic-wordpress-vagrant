@@ -10,6 +10,19 @@
   roles:
     - wordpress
 
+  pre_tasks: 
+    - name: Symlink XHProf display files into web root
+      file: 
+        src: /var/www/lib/xhprof/xhprof-master
+        dest: '{{ web_root }}/xhprof'
+        state: link
+
+    - name: Symlink Kint into web root
+      file: 
+        src: /var/www/lib/kint/kint-master
+        dest: '{{ web_root }}/kint'
+        state: link
+
   tasks: 
     - name: Enable xDebug
       command: phpenmod xdebug
@@ -25,14 +38,3 @@
         name: apache2
         state: restarted
 
-    - name: Symlink XHProf display files into web root
-      file: 
-        src: /var/www/lib/xhprof/xhprof-master
-        dest: '{{ web_root }}/xhprof'
-        state: link
-
-    - name: Symlink Kint into web root
-      file: 
-        src: /var/www/lib/kint/kint-master
-        dest: '{{ web_root }}/kint'
-        state: link
