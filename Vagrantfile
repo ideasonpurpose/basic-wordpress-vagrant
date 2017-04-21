@@ -1,5 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
+# Version: 0.3.6
 
 # If no hostname is set, use the sanitized name of the Vagrantfile's containing directory
 $hostname ||= File.basename(__dir__)

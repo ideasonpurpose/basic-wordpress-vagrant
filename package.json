@@ -18,5 +18,12 @@
   "bugs": {
     "url": "https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues"
   },
-  "homepage": "https://github.com/ideasonpurpose/basic-wordpress-vagrant#readme"
+  "homepage": "https://github.com/ideasonpurpose/basic-wordpress-vagrant#readme",
+  "devDependencies": {
+    "version-everything": "^0.1.2"
+  },
+  "version_files": [
+    "README.md",
+    "Vagrantfile"
+  ]
 }
