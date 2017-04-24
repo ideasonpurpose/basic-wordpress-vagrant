@@ -24,6 +24,7 @@
   },
   "version_files": [
     "README.md",
+    "ansible/main.yml",
     "Vagrantfile"
   ]
 }

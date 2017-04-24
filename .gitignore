@@ -2,3 +2,4 @@
 .vagrant
 *.sql
 site/*
+node_modules
