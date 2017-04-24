@@ -27,7 +27,6 @@
     return_content: yes
   register: wp_salts
 
-
 - name: Write Vagrant defaults to wp-config.php
   connection: local
   become: no

@@ -82,7 +82,7 @@ define('DB_COLLATE', '');
  * @since 2.6.0
  */
 {% if wp_salts.content is defined %}
-{{ wp_salts.content}}
+{{ wp_salts.content | safe }}
 {% else %}
 define('AUTH_KEY',         'put your unique phrase here');
 define('SECURE_AUTH_KEY',  'put your unique phrase here');
