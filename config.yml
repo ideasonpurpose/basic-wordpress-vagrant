@@ -25,6 +25,11 @@
 # wp_download: https://wordpress.org/wordpress-4.1.8.zip  Version 4.1.8
 
 
+# ----- Default WordPress Theme -----
+# Attempt to activate a theme with this name
+# default_theme: mytheme
+
+
 # ----- Auto-install plugins -----
 #
 # Attempt installation of missing plugins

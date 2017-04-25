@@ -3,13 +3,16 @@
 # Version: 0.3.6
 
 # If no hostname is set, use the sanitized name of the Vagrantfile's containing directory
-$hostname ||= File.basename(__dir__)
+$hostname = $themename = File.basename(__dir__)
         .downcase
         .gsub(/(\.dev)*$/, '')  # strip .dev TLD if there
         .gsub(/[^a-z0-9]+/,'-') # sanitize non-alphanumerics to hyphens
         .gsub(/^-+|-+$/,'')     # strip leading or trailing hyphens (Ruby-style trim)
 
-# if that fails, fallback to 'vagrant'
+# Set the default theme name to the sanitized directory
+$themename = $hostname
+
+# if hostname cleaning failed, fallback to 'vagrant'
 $hostname = "vagrant" if $hostname.empty?
 
 # add a fake-TLD '.dev' extension
@@ -55,6 +58,7 @@ Vagrant.configure(2) do |config|
         # Set all Vagrant dependent vars here to override the playbook defaults
         ansible.extra_vars = {
           site_name: (Vagrant.has_plugin? 'vagrant-hostmanager') ? $hostname : nil,
+          theme_name: $themename,
           vagrant_cwd: File.expand_path(__dir__)
         }
     end

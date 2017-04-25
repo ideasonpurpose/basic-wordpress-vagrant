@@ -1,4 +1,5 @@
 ---
+theme: '{{ default_theme | default(theme_name) }}'
 install_plugins: yes
 
 cwd: '/vagrant'

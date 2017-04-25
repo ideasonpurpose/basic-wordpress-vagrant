@@ -1,4 +1,8 @@
 ---
+- name: Activate default theme
+  shell: wp theme activate {{ theme }}
+  become: no
+  ignore_errors: yes
 
 # wp option will error out if the site hasn't been installed yet
 - name: scrape options from `wp option get active_plugins`
