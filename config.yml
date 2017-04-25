@@ -1,6 +1,11 @@
 ---
 # The settings in this file override Basic WordPress Vagrant project's defaults.
 
+# ----- Use self-signed SSL (https) -----
+#
+# Serve the site using a the https protocol and a self-signed SSL certificate.
+# use_ssl: yes
+
 
 # ----- WordPress Version -----
 # 

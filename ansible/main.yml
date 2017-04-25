@@ -24,6 +24,14 @@
         dest: '{{ web_root }}/kint'
         state: link
 
+    - name: Make sure /etc/apache2/ssl exists
+      file:
+        path: /etc/apache2/ssl
+        state: directory
+
+    - name: Generate self-signed ssl cert
+      command: openssl req -new -nodes -x509 -subj "/C=US/ST=NY/L=NY/O=Basic WordPress Vagrant/CN={{ site_name }}" -days 1000 -keyout /etc/apache2/ssl/basic-wp.key -out /etc/apache2/ssl/basic-wp.crt
+
   tasks: 
     - name: Enable xDebug
       command: phpenmod xdebug

@@ -71,7 +71,9 @@ Vagrant.configure(2) do |config|
     end
     config.vm.provision "Summary", type: "shell", privileged: false, inline: <<-EOF
       echo "Vagrant Box provisioned!"
-      echo "Local server address is http://#{$hostname}"
+      echo "Local server addresses:"
+      echo "    https://#{$hostname}"
+      echo "    http://#{$hostname}"
     EOF
 
   else

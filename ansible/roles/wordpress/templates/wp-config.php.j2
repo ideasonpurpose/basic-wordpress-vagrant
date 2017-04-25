@@ -4,8 +4,8 @@
  * Vagrant overrides
  */
 
-define('WP_HOME', 'http://{{ site_addr }}');
-define('WP_SITEURL', 'http://{{ [site_addr, wp_dir] | join('/') if wp_dir else site_addr }}');
+define('WP_HOME', '{{ 'https' if use_ssl else 'http' }}://{{ site_addr }}');
+define('WP_SITEURL', '{{ 'https' if use_ssl else 'http' }}://{{ [site_addr, wp_dir] | join('/') if wp_dir else site_addr }}');
 define('WP_ENV', 'development');
 
 define('WP_CONTENT_DIR', '{{ wp_root }}/{{ wp_content }}');

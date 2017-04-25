@@ -13,6 +13,8 @@ vagrant_cwd: /vagrant
 vagrant_local_webroot: '{{ vagrant_cwd }}/{{ web_dir }}'
 vagrant_local_wp_root: '{{ [vagrant_local_webroot, wp_dir] | join("/") if wp_dir else vagrant_local_webroot }}'
 
+use_ssl: no
+
 wp_config: 
   db_name: wordpress
   db_user: wp_user
