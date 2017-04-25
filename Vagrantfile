@@ -21,6 +21,9 @@ $hostname = $hostname.gsub(/(\.dev)*$/, '') + '.dev'
 # Explicitly setting $hostname here will override everything above
 # $hostname = 'dev.example.com'
 
+# Read version from package.json
+$version = JSON.parse(File.read(__dir__ + '/package.json'))['version']
+
 Vagrant.configure(2) do |config|
   config.ssh.insert_key = false
   config.vm.box = "ideasonpurpose/basic-wp"
@@ -75,6 +78,7 @@ Vagrant.configure(2) do |config|
     end
     config.vm.provision "Summary", type: "shell", privileged: false, inline: <<-EOF
       echo "Vagrant Box provisioned!"
+      echo "Basic WordPress Vagrant version: #{$version}"
       echo "Local server addresses:"
       echo "    https://#{$hostname}"
       echo "    http://#{$hostname}"
@@ -83,6 +87,7 @@ Vagrant.configure(2) do |config|
   else
     config.vm.provision "Summary", type: "shell", privileged: false, inline: <<-EOF
       echo "Vagrant Box provisioned!"
+      echo "Basic WordPress Vagrant version: #{$version}"
       ID=`cat /vagrant/.vagrant/machines/default/virtualbox/id`
       IP=`hostname -I | cut -f2 -d' '`
       echo "Local server address is http://$IP"
