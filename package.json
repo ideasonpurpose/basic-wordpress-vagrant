@@ -7,6 +7,9 @@
     "type": "git",
     "url": "git+https://github.com/ideasonpurpose/basic-wordpress-vagrant.git"
   },
+  "scripts": {
+    "version": "version-everything && git add -u"
+  },
   "keywords": [
     "vagrant",
     "wordpress",
