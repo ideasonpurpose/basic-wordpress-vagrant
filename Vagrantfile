@@ -1,6 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-# Version: 0.4.0
+# Version: 0.4.1
 
 # If no hostname is set, use the sanitized name of the Vagrantfile's containing directory
 $hostname = $themename = File.basename(__dir__)
