@@ -27,7 +27,7 @@ $version = JSON.parse(File.read(__dir__ + '/package.json'))['version']
 Vagrant.configure(2) do |config|
   config.ssh.insert_key = false
   config.vm.box = "ideasonpurpose/basic-wp"
-  config.vm.box_version = ">= 1.2.0"
+  config.vm.box_version = ">= 1.3.0"
   # config.vm.box = "basic-wp"
   config.vm.hostname = $hostname
   config.vm.network "private_network", type: "dhcp"

@@ -1,5 +1,12 @@
 # basic-wordpress-vagrant changelog
 
+## 0.4.0
+- SSL support via self-signed certificates
+- Default theme loading (fewer white screens)
+- Fix for some WP Salts containing templating strings which broke the provisioner
+- Performance tweaks
+- [basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box)  updated to v1.3.0
+
 ## 0.3.0
 - Updated [basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) to v1.0.0, now running on PHP 7.0 and WP-CLI 0.25
 - Symlink Kint lib from the base box instead of downloading
