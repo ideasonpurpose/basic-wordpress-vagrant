@@ -112,6 +112,8 @@ A default theme can be set in `config.yml`. If no default is set, the Ansible pr
 
 Using Composer from `vagrant ssh` may require a GitHub OAuth token. More info: [API rate limit and OAuth tokens](https://github.com/composer/composer/blob/master/doc/articles/troubleshooting.md#api-rate-limit-and-oauth-tokens).
 
+For direct MySQL access, `vagrant ssh`, then `mysql wordpress`. 
+
 The base box was generated from the [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
 
 
