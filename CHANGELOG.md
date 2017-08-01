@@ -1,8 +1,9 @@
 # basic-wordpress-vagrant changelog
 
-- Make `config.yml` file optional, set up `config-example.yml` (#54)
+## dev
+- Make `config.yml` file optional, set up `config-example.yml` ([#54](https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/54))
 - Don't generate self-signed certs unless `use_ssl` is true
-- Fix for cert generation errors when the vagrant-hostsmanager plugin is not installed. ([#56]())
+- Fix for cert generation errors when the [vagrant-hostsmanager plugin](https://github.com/devopsgroup-io/vagrant-hostmanager) is not installed. ([#56](https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/56))
 - Smarter server address reporting in `vagrant up`
 
 ## 0.4.0
