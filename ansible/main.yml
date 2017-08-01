@@ -36,6 +36,7 @@
 
     - name: Generate self-signed ssl cert
       command: openssl req -new -nodes -x509 -subj "/C=US/ST=NY/L=NY/O=Basic WordPress Vagrant/CN={{ site_name or 'basic-wordpress-vagrant' }}" -days 1000 -keyout /etc/apache2/ssl/basic-wp.key -out /etc/apache2/ssl/basic-wp.crt
+      when: use_ssl
 
   tasks: 
     - name: Enable xDebug

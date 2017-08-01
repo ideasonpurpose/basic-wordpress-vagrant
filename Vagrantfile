@@ -24,6 +24,10 @@ $hostname = $hostname.gsub(/(\.dev)*$/, '') + '.dev'
 # Read version from package.json
 $version = JSON.parse(File.read(__dir__ + '/package.json'))['version']
 
+# Read Ansible config from config.yml, set default for use_ssl
+$ansible_config = YAML.load_file('config.yml') if File.file?('config.yml')
+$ansible_config = { "use_ssl" => false } unless $ansible_config
+
 Vagrant.configure(2) do |config|
   config.ssh.insert_key = false
   config.vm.box = "ideasonpurpose/basic-wp"
@@ -68,6 +72,7 @@ Vagrant.configure(2) do |config|
   end
 
   if Vagrant.has_plugin? 'vagrant-hostmanager'
+    $server_address = ($ansible_config['use_ssl'] ? 'https://' : 'http://') + $hostname
     config.vm.provision :hostmanager
     config.hostmanager.enabled = false
     config.hostmanager.manage_host = true
@@ -79,18 +84,17 @@ Vagrant.configure(2) do |config|
     config.vm.provision "Summary", type: "shell", privileged: false, inline: <<-EOF
       echo "Vagrant Box provisioned!"
       echo "Basic WordPress Vagrant version: #{$version}"
-      echo "Local server addresses:"
-      echo "    https://#{$hostname}"
-      echo "    http://#{$hostname}"
+      echo "Local server addresses is #{$server_address}"
     EOF
 
   else
+    $server_address = $ansible_config['use_ssl'] ? 'https://$IP' : 'http://$IP'
     config.vm.provision "Summary", type: "shell", privileged: false, inline: <<-EOF
       echo "Vagrant Box provisioned!"
       echo "Basic WordPress Vagrant version: #{$version}"
       ID=`cat /vagrant/.vagrant/machines/default/virtualbox/id`
       IP=`hostname -I | cut -f2 -d' '`
-      echo "Local server address is http://$IP"
+      echo "Local server address is #{ $server_address }"
     EOF
 
   end
