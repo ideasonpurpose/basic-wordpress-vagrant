@@ -1,5 +1,5 @@
 # Basic WordPress Vagrant Environment
-#### Version: 0.4.1
+#### Version: 0.4.2
 
 An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after managed WordPress hosting platforms like WP Engine and Flywheel.
 
