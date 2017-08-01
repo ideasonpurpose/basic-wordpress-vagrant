@@ -1,5 +1,7 @@
 ---
-# The settings in this file override Basic WordPress Vagrant project's defaults.
+# ---- Instructions -----
+# Duplicate this file as `config.yml` to override the Basic WordPress Vagrant default settings.
+
 
 # ----- Use self-signed SSL (https) -----
 #

@@ -6,12 +6,17 @@
 
   vars_files:
     - defaults/main.yml
-    - ../config.yml
 
   roles:
     - wordpress
 
   pre_tasks: 
+    - name: Load config overrides (if file exists)
+      include_vars: '{{ item }}'
+      with_first_found:
+          - ../config.yml
+          - defaults/main.yml
+
     - name: Symlink XHProf display files into web root
       file: 
         src: /var/www/lib/xhprof/xhprof-master
