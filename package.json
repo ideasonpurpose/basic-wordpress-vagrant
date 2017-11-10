@@ -16,14 +16,17 @@
     "ansible",
     "webdev"
   ],
-  "author": "Joe Maller <joe@ideasonpurpose.com>",
+  "author": [
+    "Joe Maller <joe@ideasonpurpose.com>",
+    "Ideas On Purpose (https://www.ideasonpurpose.com)"
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues"
   },
   "homepage": "https://github.com/ideasonpurpose/basic-wordpress-vagrant#readme",
   "devDependencies": {
-    "version-everything": "^0.1.2"
+    "version-everything": "^0.2.1"
   },
   "version_files": [
     "README.md",
