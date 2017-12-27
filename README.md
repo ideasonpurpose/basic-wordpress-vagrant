@@ -116,6 +116,7 @@ For direct MySQL access, `vagrant ssh`, then `mysql wordpress`.
 
 The base box was generated from the [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
 
+Some [solutions for Chrome's annoying HSTS lockout][hsts]. Try typing `badidea` on the error page. 
 
 
 ## About
@@ -135,3 +136,4 @@ This project is sponsored by and used in production at [Ideas On Purpose][iop].
 [sudoers]: https://gist.github.com/joemaller/41912f5d027a4adc7c14
 [visudo]: http://stackoverflow.com/a/14101449
 [xdebug]: https://xdebug.org/docs/
+[hsts]: https://stackoverflow.com/questions/33268264/chromethe-website-uses-hsts-network-errors-this-page-will-probably-work-late
