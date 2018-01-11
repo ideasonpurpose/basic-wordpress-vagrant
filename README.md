@@ -9,16 +9,9 @@ From a "cold boot" your WordPress Vagrant environment should be ready to go in a
 
 ## Requirements
 
-[Vagrant][] and [VirtualBox][] must be installed. Mac users should also install Ansible with [Homebrew][]: `brew install ansible`. The [vagrant-hostmanager][] plugin is highly recommended, but not required.
+[Vagrant][] and [VirtualBox][] must be installed. The [vagrant-hostmanager][] plugin is highly recommended, but not required.
 
 Complete [first-time setup instructions](#complete-one-time-setup-instructions) are below.
-
-### Windows Support
-This project now runs successfully on Windows 10 when launched as an administrator. Two workflow issues remain unresolved: (see [#4](https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/4))
-
-- [Vagrant Hostmanager][vagrant-hostmanager] silently fails to write to `etc/hosts`.
-- Microsoft Edge will not load websites from local IP addresses. IE11, Chrome and Firefox all work correctly. 
-
 
 ## Instructions
 
@@ -63,9 +56,7 @@ Below are the complete steps necessary to use the Basic WordPress Vagrant Enviro
 
 1. Download the Vagrant installer from [vagrantup.com][vagrant] and install Vagrant.
 2. Download the VirtualBox installer from [virtualbox.org][virtualbox] and install VirtualBox.
-3. In the terminal, run `brew update`. If Homebrew is not installed, the one-line installation command is at the top of [Homebrew's website][homebrew].
-4. Still in the terminal, run `brew install ansible` to install [Ansible][].
-5. Finally, install the [Vagrant Host Manager plugin][vagrant-hostmanager] by running this command in the terminal:  
+3. Install the [Vagrant Host Manager plugin][vagrant-hostmanager] by running this command in the terminal:  
    `vagrant plugin install vagrant-hostmanager`
 
 That's everything, now just follow the [Instructions](#instructions) to spin up your WordPress environment.
@@ -117,6 +108,10 @@ For direct MySQL access, `vagrant ssh`, then `mysql wordpress`.
 The base box was generated from the [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
 
 Some [solutions for Chrome's annoying HSTS lockout][hsts]. Try typing `badidea` on the error page. 
+
+[Vagrant Hostmanager][vagrant-hostmanager] may silently fail to write to `etc/hosts` on Windows 10.
+
+Microsoft Edge on Windows 10 will not load websites from local IP addresses. IE11, Chrome and Firefox all work correctly. 
 
 
 ## About
