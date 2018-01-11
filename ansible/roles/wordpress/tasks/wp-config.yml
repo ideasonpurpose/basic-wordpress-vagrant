@@ -20,7 +20,6 @@
 #   command: cp /tmp/wp-config.php {{ web_root }}/wp-config.php
 
 - name: Get WordPress config salts
-  connection: local
   become: no
   uri:
     url: https://api.wordpress.org/secret-key/1.1/salt/
@@ -28,8 +27,13 @@
   register: wp_salts
 
 - name: Write Vagrant defaults to wp-config.php
-  connection: local
   become: no
   template:
     src: wp-config.php.j2
-    dest: '{{ vagrant_local_wp_root }}/wp-config.php'
+    dest: '{{ wp_root }}/wp-config.php'
+
+- name: Write wp-cli config
+  template:
+    src: wp-cli-config.yml.j2
+    # TODO: Why is this path hard-coded?
+    dest: '/home/vagrant/.wp-cli/config.yml'

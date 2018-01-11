@@ -1,6 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-# Version: 0.4.3
+# Version: 0.5.xx
 
 # Try reading package.name from ./site/package.json
 begin
@@ -33,7 +33,7 @@ $version = '?.?.?' if $version.nil? || $version.empty?
 
 # Read Ansible config from config.yml, set default for use_ssl
 $ansible_config = YAML.load_file('config.yml') if File.file?('config.yml')
-$ansible_config = { "use_ssl" => false } unless $ansible_config
+$ansible_config ||= { "use_ssl" => false }
 
 Vagrant.configure(2) do |config|
   config.ssh.insert_key = false
@@ -56,42 +56,29 @@ Vagrant.configure(2) do |config|
     v.customize ["modifyvm", :id, "--cableconnected1", 'on']
   end
 
-  if Vagrant::Util::Platform.windows?
-    $site_name = (Vagrant.has_plugin? 'vagrant-hostmanager') ? 'site_name=#{$hostname}' : ''
-    config.vm.provision "Running Ansible inside the VM", type: "shell", privileged: false, inline: <<-EOT
-      export ANSIBLE_FORCE_COLOR=true
-      echo 'localhost ansible_connection=local #{$site_name}' > /tmp/hosts
-      cd /vagrant
-      ansible-playbook ansible/main.yml -i /tmp/hosts
-      rm -rf /tmp/hosts
-    EOT
-  else
-    config.vm.provision "ansible" do |ansible|
-        # ansible.verbose = "vvvv"
-        ansible.playbook = "ansible/main.yml"
-        # Set all Vagrant dependent vars here to override the playbook defaults
-        ansible.extra_vars = {
-          site_name: (Vagrant.has_plugin? 'vagrant-hostmanager') ? $hostname : nil,
-          theme_name: $themename,
-          vagrant_cwd: File.expand_path(__dir__)
-        }
-    end
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.playbook = "ansible/main.yml"
+    ansible.extra_vars = {
+      site_name: (Vagrant.has_plugin? 'vagrant-hostmanager') ? $hostname : nil,
+      theme_name: $themename,
+      vagrant_cwd: File.expand_path(__dir__)
+    }
   end
 
   if Vagrant.has_plugin? 'vagrant-hostmanager'
-    $server_address = ($ansible_config['use_ssl'] ? 'https://' : 'http://') + $hostname
+    server_address = ($ansible_config['use_ssl'] ? 'https://' : 'http://') + $hostname
     config.vm.provision :hostmanager
     config.hostmanager.enabled = false
     config.hostmanager.manage_host = true
-    config.hostmanager.ip_resolver = proc do |vm, resolving_vm|
+    config.hostmanager.ip_resolver = proc do |vm, _resolving_vm|
       if vm.id && !Vagrant::Util::Platform.windows?
-        %x(VBoxManage guestproperty get #{vm.id} "/VirtualBox/GuestInfo/Net/1/V4/IP").split()[1]
+        `VBoxManage guestproperty get #{vm.id} "/VirtualBox/GuestInfo/Net/1/V4/IP"`.split[1]
       end
     end
     config.vm.provision "Summary", type: "shell", privileged: false, inline: <<-EOF
       echo "Vagrant Box provisioned!"
       echo "Basic WordPress Vagrant version: #{$version}"
-      echo "Local server addresses is #{$server_address}"
+      echo "Local server addresses is #{server_address}"
     EOF
 
   else
@@ -101,9 +88,8 @@ Vagrant.configure(2) do |config|
       echo "Basic WordPress Vagrant version: #{$version}"
       ID=`cat /vagrant/.vagrant/machines/default/virtualbox/id`
       IP=`hostname -I | cut -f2 -d' '`
-      echo "Local server address is #{ $server_address }"
+      echo "Local server address is #{server_address}"
     EOF
 
   end
-
 end

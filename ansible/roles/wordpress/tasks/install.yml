@@ -1,15 +1,13 @@
 ---
 
 - name: Make sure local WordPress directory exists
-  connection: local
   become: no
   file: 
-    path: '{{ vagrant_local_wp_root }}'
+    path: '{{ wp_root }}'
     state: directory 
     mode: 0755
 
 - name: Create download cache directory
-  connection: local
   become: no
   file:
     path: /tmp/wordpress-{{ ansible_date_time.date }}-{{ ansible_date_time.hour }}
@@ -29,7 +27,6 @@
     mode: 0777
 
 - name: Download WordPress archive
-  connection: local
   become: no
   get_url: 
     url: "{{ wp_download | default('https://wordpress.org/latest.zip', true) }}"
@@ -43,11 +40,11 @@
     dest: '{{ wp_src_dir.path }}'
   register: wp_files
 
-- name: 'Pull-sync fresh WordPress onto local site directory'
+- name: 'Pull-sync fresh WordPress onto site directory'
   become: no
   synchronize: 
     src: '{{ wp_src_dir.path }}/wordpress/'
-    dest: '{{ vagrant_local_wp_root }}/'
+    dest: '{{ wp_root }}/'
     mode: pull
     use_ssh_args: yes
 
@@ -55,6 +52,4 @@
   get_url: 
     url: 'https://gist.githubusercontent.com/joemaller/4f7518e0d04a82a3ca16/raw/'
     dest: '{{ wp_root }}/.gitignore'
-    
-    
-# TODO: Need to write the index.php file to vagrant_local_webroot and point to wherever Wordpress was installed    
+
