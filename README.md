@@ -93,13 +93,18 @@ Many custom options can be set in [`config.yml`][config]:
 * File permissions are handled by managed hosts and may differ between projects. To ignore permissions for sites managed with Git, run this in your local repo: `git config core.filemode false`
 
 
+## White Screen of Death?
+
+Log directly into `/wp-admin` and try to activate your theme again. 
+
+
 ## Additional Notes
 
 An extensive [.gitignore file][gitignore] will be added to the site directory if one doesn't already exist. This file excludes all WordPress core files from Git.
 
 The Ansible provisioner will search for MySQL database dumpfiles in the top five levels of the project, ignoring WordPress core and common vendor directories. The top-most (first-found) database dumpfile will be imported.
 
-A default theme can be set in `config.yml`. If no default is set, the Ansible provisioner will attempt to activate a theme whose name matches the project hostname (usually the containing directory). So a project spun up in `xyzco` will attempt to activate the theme in `xyzco/site/wp-content/xyzco/`. These settings help prevent white-screens when restoring a project which uses versioned theme directories.
+A default theme can be set in `config.yml`. If no default is set, the Ansible provisioner will attempt to activate a theme whose name matches the `name` attribute in `site/package.json`. These settings help prevent white-screens when restoring a project which uses versioned theme directories.
 
 Using Composer from `vagrant ssh` may require a GitHub OAuth token. More info: [API rate limit and OAuth tokens](https://github.com/composer/composer/blob/master/doc/articles/troubleshooting.md#api-rate-limit-and-oauth-tokens).
 
