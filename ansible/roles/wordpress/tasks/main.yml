@@ -1,8 +1,8 @@
 ---
 
-- include: install.yml
-- include: host-specific-cleanup.yml
-- include: wp-config.yml
-- include: database.yml
-- include: wp-cli.yml
+- import_tasks: install.yml
+- import_tasks: host-specific-cleanup.yml
+- import_tasks: wp-config.yml
+- import_tasks: database.yml
+- import_tasks: wp-cli.yml
   when: (dumpfiles is defined) and dumpfiles.stdout_lines
