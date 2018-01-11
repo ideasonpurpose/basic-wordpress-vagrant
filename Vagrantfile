@@ -2,27 +2,34 @@
 # vi: set ft=ruby :
 # Version: 0.4.3
 
-# If no hostname is set, use the sanitized name of the Vagrantfile's containing directory
-$hostname = $themename = File.basename(__dir__)
-        .downcase
-        .gsub(/(\.dev)*$/, '')  # strip .dev TLD if there
-        .gsub(/[^a-z0-9]+/,'-') # sanitize non-alphanumerics to hyphens
-        .gsub(/^-+|-+$/,'')     # strip leading or trailing hyphens (Ruby-style trim)
+# Try reading package.name from ./site/package.json
+begin
+  $hostname = JSON.parse(File.read(__dir__ + '/site/package.json'))['name']
+  $themename = $hostname
+rescue StandardError
+end
 
-# Set the default theme name to the sanitized directory
-$themename = $hostname
+# hostname fallback to 'vagrant' if nil or empty
+$hostname = 'vagrant' if $hostname.nil? || $hostname.empty?
 
-# if hostname cleaning failed, fallback to 'vagrant'
-$hostname = "vagrant" if $hostname.empty?
+# clean hostname and add '.test' TLD
+$hostname = $hostname
+            .downcase
+            .gsub(/[^a-z0-9]+/, '-') # sanitize non-alphanumerics to hyphens
+            .gsub(/^-+|-+$/, '')     # strip leading or trailing hyphens
+            .gsub(/(\.dev|\.test)*$/, '') + '.test'
 
-# add a fake-TLD '.dev' extension
-$hostname = $hostname.gsub(/(\.dev)*$/, '') + '.dev'
-
-# Explicitly setting $hostname here will override everything above
-# $hostname = 'dev.example.com'
+# Explicitly set $hostname here to override everything above
+# $hostname = "dev.example.test"
 
 # Read version from package.json
-$version = JSON.parse(File.read(__dir__ + '/package.json'))['version']
+begin
+  $version = JSON.parse(File.read(__dir__ + '/package.json'))['version']
+rescue StandardError
+end
+
+# Placeholder version if missing, nil or empty
+$version = '?.?.?' if $version.nil? || $version.empty?
 
 # Read Ansible config from config.yml, set default for use_ssl
 $ansible_config = YAML.load_file('config.yml') if File.file?('config.yml')
