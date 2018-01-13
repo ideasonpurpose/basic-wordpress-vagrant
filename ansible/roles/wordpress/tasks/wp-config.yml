@@ -1,7 +1,7 @@
 ---
 
 - name: get VM's IP Address
-  shell: hostname -I | cut -f2 -d' '
+  shell: VBoxControl --nologo guestproperty get /VirtualBox/GuestInfo/Net/1/V4/IP | cut -f2 -d' '
   register: ip_addr
 
 - set_fact: site_addr={{ site_name or ip_addr.stdout }}
@@ -32,8 +32,16 @@
     src: wp-config.php.j2
     dest: '{{ wp_root }}/wp-config.php'
 
+- name: Make sure ~/.wp-cli directory exists
+  become: no
+  file: 
+    path: '/home/{{ ansible_user }}/.wp-cli'
+    state: directory 
+    mode: 0755
+
+
 - name: Write wp-cli config
+  become: no
   template:
     src: wp-cli-config.yml.j2
-    # TODO: Why is this path hard-coded?
-    dest: '/home/vagrant/.wp-cli/config.yml'
+    dest: '/home/{{ ansible_user }}/.wp-cli/config.yml'
