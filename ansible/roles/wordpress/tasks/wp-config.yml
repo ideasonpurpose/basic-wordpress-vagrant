@@ -33,11 +33,12 @@
     dest: '{{ wp_root }}/wp-config.php'
 
 - name: Make sure ~/.wp-cli directory exists
-  become: no
   file: 
     path: '/home/{{ ansible_user }}/.wp-cli'
     state: directory 
     mode: 0755
+    owner: vagrant
+    group: vagrant
 
 
 - name: Write wp-cli config
@@ -45,3 +46,5 @@
   template:
     src: wp-cli-config.yml.j2
     dest: '/home/{{ ansible_user }}/.wp-cli/config.yml'
+    owner: vagrant
+    group: vagrant
