@@ -96,13 +96,9 @@ Vagrant.configure(2) do |config|
   else
     server_address = $ansible_config['use_ssl'] ? 'https://$IP' : 'http://$IP'
     config.vm.provision "Summary", type: "shell", privileged: true, inline: <<-EOF
-      echo "Vagrant Box provisioned!"
       echo "Basic WordPress Vagrant version: #{$version}"
-      whoami
-      VBoxControl --nologo guestproperty get /VirtualBox/GuestInfo/Net/1/V4/IP | cut -f2 -d' '
-      IP=`hostname -I | cut -f2 -d' '`
+      echo "Vagrant Box provisioned!"
       IP=`VBoxControl --nologo guestproperty get /VirtualBox/GuestInfo/Net/1/V4/IP | cut -f2 -d' '`
-      echo IP$IP
       echo "Local server address is #{server_address}"
     EOF
 
