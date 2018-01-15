@@ -1,10 +1,16 @@
 # basic-wordpress-vagrant changelog
 
-## dev
-- Make `config.yml` file optional, set up `config-example.yml` ([#54](https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/54))
+## 0.5.0
+- Ansible is no longer required, all provisioning now happens on the VM (and it's faster!)
+- Recommended plugins now include [hostmanager]() and [bindfs](). Windows users may also want to install [auto_network](https://github.com/oscar-stack/vagrant-auto_network)
+- Fully supported on Windows! [#4](https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/4)
+- Switch to .test from .dev (thanks [Google](https://ma.ttias.be/chrome-force-dev-domains-https-via-preloaded-hsts/)) [#60](https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/60)
+- The `config.yml` file is optional, check `config-example.yml` for example settings [#54](https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/54)
+- Localize wp-cli config for alternate install locations  [#58](https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/58)
 - Don't generate self-signed certs unless `use_ssl` is true
-- Fix for cert generation errors when the [vagrant-hostsmanager plugin](https://github.com/devopsgroup-io/vagrant-hostmanager) is not installed. ([#56](https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/56))
+- Fix for cert generation errors when the [vagrant-hostmanager plugin](https://github.com/devopsgroup-io/vagrant-hostmanager) is not installed. [#56](https://github.com/ideasonpurpose/basic-wordpress-vagrant/issues/56)
 - Smarter server address reporting in `vagrant up`
+- Simplified Vagrantfile reporting with `post_message`
 
 ## 0.4.0
 - SSL support via self-signed certificates
