@@ -1,7 +1,7 @@
 ---
 
 - name: get VM's IP Address
-  shell: VBoxControl --nologo guestproperty get /VirtualBox/GuestInfo/Net/1/V4/IP | cut -f2 -d' '
+  shell: VBoxControl --nologo guestproperty get /VirtualBox/GuestInfo/Net/1/V4/IP | cut -f2 -d' ' | tee /vagrant/.ip_address
   register: ip_addr
 
 - set_fact: site_addr={{ site_name or ip_addr.stdout }}

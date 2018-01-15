@@ -41,7 +41,21 @@ Vagrant.configure(2) do |config|
   config.vm.box_version = ">= 1.4.0"
   # config.vm.box = "basic-wp"
   config.vm.hostname = $hostname
-  config.vm.define $hostname
+  config.vm.define $devDomain
+
+  config.vm.post_up_message = Proc.new {
+    ip = File.read(__dir__ + '/.ip_address').strip
+    protocol =  $ansible_config['use_ssl'] ? 'https://' : 'http://'
+    msg  = "    Thank you for using Basic WordPress Vagrant (v#{$version})\n"
+    msg << "    https://github.com/ideasonpurpose/basic-wordpress-vagrant\n\n"
+    msg << "    Local server addresses:\n" if Vagrant.has_plugin? 'vagrant-hostmanager'
+    msg << "        #{ protocol }#{ $devDomain }\n" if Vagrant.has_plugin? 'vagrant-hostmanager'
+    msg << "    Local server address:\n" if not Vagrant.has_plugin? 'vagrant-hostmanager'
+    msg << "        #{ protocol }#{ ip }\n"
+    msg << "-"
+    msg
+  }
+
 
   if Vagrant.has_plugin? 'vagrant-auto_network'
     config.vm.network :private_network, auto_network: true, id: "basic-wordpress-vagrant_#{$hostname}"
@@ -56,7 +70,7 @@ Vagrant.configure(2) do |config|
     v.customize ["modifyvm", :id, "--cpus", 1]
     v.customize ["modifyvm", :id, "--memory", 512]
     v.customize ["modifyvm", :id, "--vram", 4]
-    v.customize ["modifyvm", :id, "--name", $hostname]
+    v.customize ["modifyvm", :id, "--name", $devDomain]
     v.customize ["modifyvm", :id, "--ioapic", "on"]
     v.customize ["modifyvm", :id, "--paravirtprovider", "kvm"]
     v.customize ["modifyvm", :id, "--cableconnected1", 'on']
@@ -77,30 +91,14 @@ Vagrant.configure(2) do |config|
     config.hostmanager.enabled = true
     config.hostmanager.manage_host = true
     config.hostmanager.manage_guest = true
+    config.hostmanager.aliases = [$devDomain]
     config.hostmanager.ip_resolver = proc do |vm, resolving_vm|
       ip_addr = ""
-      cmd = "VBoxControl --nologo guestproperty get /VirtualBox/GuestInfo/Net/1/V4/IP | cut -f2 -d' '"
+      cmd = "VBoxControl --nologo guestproperty get /VirtualBox/GuestInfo/Net/1/V4/IP | cut -f2 -d' '"  #" | tee /vagrant/.ip_address"
       vm.communicate.sudo(cmd) do |type, data|
         ip_addr << data.strip
       end
       ip_addr
     end
-
-    server_address = ($ansible_config['use_ssl'] ? 'https://' : 'http://') + $hostname
-    config.vm.provision "Summary", type: "shell", privileged: false, inline: <<-EOF
-      echo "Vagrant Box provisioned!"
-      echo "Basic WordPress Vagrant version: #{$version}"
-      echo "Local server addresses is #{server_address}"
-    EOF
-
-  else
-    server_address = $ansible_config['use_ssl'] ? 'https://$IP' : 'http://$IP'
-    config.vm.provision "Summary", type: "shell", privileged: true, inline: <<-EOF
-      echo "Basic WordPress Vagrant version: #{$version}"
-      echo "Vagrant Box provisioned!"
-      IP=`VBoxControl --nologo guestproperty get /VirtualBox/GuestInfo/Net/1/V4/IP | cut -f2 -d' '`
-      echo "Local server address is #{server_address}"
-    EOF
-
   end
 end
