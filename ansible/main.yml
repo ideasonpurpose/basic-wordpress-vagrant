@@ -1,12 +1,9 @@
 - hosts: all
   become: 'yes'
-
   vars_files:
     - defaults/main.yml
-
   roles:
     - wordpress
-
   pre_tasks:
     - name: Load config overrides (if file exists)
       include_vars: '{{ item }}'
@@ -33,7 +30,6 @@
         Vagrant/CN={{ site_name or 'basic-wordpress-vagrant' }}" -days 1000
         -keyout /etc/apache2/ssl/basic-wp.key -out /etc/apache2/ssl/basic-wp.crt
       when: use_ssl
-
   tasks:
     - name: Enable xDebug
       command: phpenmod xdebug

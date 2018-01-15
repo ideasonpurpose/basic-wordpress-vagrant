@@ -1,6 +1,6 @@
 {
   "name": "basic-wordpress-vagrant",
-  "version": "0.5.0-0",
+  "version": "0.5.0",
   "private": true,
   "description": "A fast, easy to use WordPress Vagrant environment modeled after managed WordPress hosting platforms",
   "repository": {
