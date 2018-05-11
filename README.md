@@ -1,11 +1,12 @@
 # Basic WordPress Vagrant Environment
+
 #### Version: 0.5.0
 
 An easy to use, fast to spin up WordPress [Vagrant][] environment modeled after managed WordPress hosting platforms like WP Engine and Flywheel.
 
 ## Advantages
-From a "cold boot" your WordPress Vagrant environment should be ready to go in about a minute, if not faster. Other WordPress Vagrant projects take much, much longer. 
 
+From a "cold boot" your WordPress Vagrant environment should be ready to go in about a minute, if not faster. Other WordPress Vagrant projects take much, much longer.
 
 ## Requirements
 
@@ -15,34 +16,34 @@ Complete [first-time setup instructions](#complete-one-time-setup-instructions) 
 
 ## Instructions
 
-1. Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
-2. Unzip and rename the directory to `yoursite.dev`
-3. Add your WordPress project to the `site` directory (or replace `site` with a clone of your WordPress repository)
-4. Optionally copy a MySQL dumpfile into the project directory
-5. Run `vagrant up`
+1.  Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
+2.  Unzip and rename the directory to something like `yoursite.test`
+3.  Add your WordPress project to the `site` directory (or replace `site` with a clone of your WordPress repository)
+4.  Optionally copy a MySQL dumpfile into the project directory
+5.  Install plugins: `vagrant plugin install vagrant-hostmanager vagrant-bindfs`
+6.  Run `vagrant up`
 
-When the Vagrant environment is provisioned a fresh install of WordPress will be applied to the `site` directory. **Any changes to core files or default themes will be lost.** Those files should really never be changed anyway, and this decision is deliberate and intentional. 
+When the Vagrant environment is provisioned a fresh install of WordPress will be applied to the `site` directory. **Any changes to core files or default themes will be lost.** Those files should really never be changed anyway, and this behavior is deliberate and intentional.
 
 To avoid being asked for a password on every `vagrant up` (when using the [vagrant-hostmanager][] plugin), [edit the sudoers file][visudo] and add the [ lines from this gist][sudoers].
 
 #### WP Engine Specific Instructions
-1. Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
-2. Unzip and rename the directory to `yoursite.dev`
-3. Download a backup snapshot from your [WP Engine Dashboard](https://my.wpengine.com).
-4. Decompress the zip archive and rename the resulting directory to `site`
-5. Copy `site` into `yoursite.dev`, replacing the existing `site` directory.
-6. Run `vagrant up`
 
+1.  Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
+2.  Unzip and rename the directory to `yoursite.dev`
+3.  Download a backup snapshot from your [WP Engine Dashboard](https://my.wpengine.com).
+4.  Decompress the zip archive and rename the resulting directory to `site`
+5.  Copy `site` into `yoursite.dev`, replacing the existing `site` directory.
+6.  Run `vagrant up`
 
 #### Flywheel Specific Instructions
 
-1. Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
-2. Unzip and rename the directory to `yoursite.dev`
-3. Download a backup snapshot from your [Flywheel Dashboard](https://app.getflywheel.com). Flywheel backup archives contains a `backup.sql` database dumpfile and a `files` directory.
-4. Rename `files` to `site`
-5. Copy `site` and `backup.sql` into `yoursite.dev`, replacing the existing `site` directory.
-6. Run `vagrant up`
-
+1.  Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
+2.  Unzip and rename the directory to `yoursite.dev`
+3.  Download a backup snapshot from your [Flywheel Dashboard](https://app.getflywheel.com). Flywheel backup archives contains a `backup.sql` database dumpfile and a `files` directory.
+4.  Rename `files` to `site`
+5.  Copy `site` and `backup.sql` into `yoursite.dev`, replacing the existing `site` directory.
+6.  Run `vagrant up`
 
 ## Other Uses
 
@@ -52,12 +53,12 @@ The [`config.yml`][config] file includes `wp_dir` and `wp_content` settings whic
 
 ## Complete, One-Time Setup Instructions
 
-Below are the complete steps necessary to use the Basic WordPress Vagrant Environment on a new Mac. These steps should only need to be done once, but it's useful to review if something isn't working correctly. 
+Below are the complete steps necessary to use the Basic WordPress Vagrant Environment on a new Mac. These steps should only need to be done once, but it's useful to review if something isn't working correctly.
 
-1. Download the Vagrant installer from [vagrantup.com][vagrant] and install Vagrant.
-2. Download the VirtualBox installer from [virtualbox.org][virtualbox] and install VirtualBox.
-3. Install the [Vagrant Host Manager plugin][vagrant-hostmanager] by running this command in the terminal:  
-   `vagrant plugin install vagrant-hostmanager`
+1.  Download the Vagrant installer from [vagrantup.com][vagrant] and install Vagrant.
+2.  Download the VirtualBox installer from [virtualbox.org][virtualbox] and install VirtualBox.
+3.  Install the [Hostmanager][vagrant-hostmanager] and [Bind-fs](https://github.com/gael-ian/vagrant-bindfs) plugins by running this command in the terminal:  
+    `vagrant plugin install vagrant-hostmanager vagrant-bind-fs`
 
 That's everything, now just follow the [Instructions](#instructions) to spin up your WordPress environment.
 
@@ -69,7 +70,7 @@ One of this project's goals is to promote [disposability](http://12factor.net/di
 
 Many custom options can be set in [`config.yml`][config]:
 
-* `wp_download` can be used to install specific WordPress versions. 
+* `wp_download` can be used to install specific WordPress versions.
 
 * `install_plugins` toggles automatic installation of missing plugins
 
@@ -81,22 +82,19 @@ Many custom options can be set in [`config.yml`][config]:
 
 * `table_prefix` maps directly to the WordPress Database Table prefix in `wp-config.php`
 
-
 ## Extras
 
-* Missing plugins will be installed if they can be found in the [WordPress Plugin Directory](https://wordpress.org/plugins/).
+* Missing WordPress plugins will be installed if they can be found in the [WordPress Plugin Directory](https://wordpress.org/plugins/).
 
-* All settings for [Debugging in WordPress](https://codex.wordpress.org/Debugging_in_WordPress) are enabled.  
+* All settings for [Debugging in WordPress](https://codex.wordpress.org/Debugging_in_WordPress) are enabled.
 
 * Save [`vagrant-hostmanager-nopasswd`][sudoers] to `/etc/sudoers.d/` for password-free, host-managed `vagrant up`.
 
 * File permissions are handled by managed hosts and may differ between projects. To ignore permissions for sites managed with Git, run this in your local repo: `git config core.filemode false`
 
-
 ## White Screen of Death?
 
-Log directly into `/wp-admin` and try to activate your theme again. 
-
+Log directly into `/wp-admin` and try to activate your theme again.
 
 ## Additional Notes
 
@@ -108,16 +106,15 @@ A default theme can be set in `config.yml`. If no default is set, the Ansible pr
 
 Using Composer from `vagrant ssh` may require a GitHub OAuth token. More info: [API rate limit and OAuth tokens](https://github.com/composer/composer/blob/master/doc/articles/troubleshooting.md#api-rate-limit-and-oauth-tokens).
 
-For direct MySQL access, `vagrant ssh`, then `mysql wordpress`. 
+For direct MySQL access, `vagrant ssh`, then `mysql wordpress`.
 
-The base box was generated from the [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project. 
+The base box was generated from the [ideasonpurpose/basic-wordpress-box](https://github.com/ideasonpurpose/basic-wordpress-box) project.
 
-Some [solutions for Chrome's annoying HSTS lockout][hsts]. Try typing `badidea` on the error page. 
+Some [solutions for Chrome's annoying HSTS lockout][hsts]. Try typing `badidea` on the error page.
 
 [Vagrant Hostmanager][vagrant-hostmanager] may silently fail to write to `etc/hosts` on Windows 10.
 
-Microsoft Edge on Windows 10 will not load websites from local IP addresses. IE11, Chrome and Firefox all work correctly. 
-
+Microsoft Edge on Windows 10 will not load websites from local IP addresses. IE11, Chrome and Firefox all work correctly.
 
 ## About
 
