@@ -2,46 +2,38 @@
   become: 'yes'
   vars_files:
     - defaults/main.yml
-
   roles:
     - wordpress
-
   pre_tasks:
     - name: Load config overrides (if file exists)
       include_vars: '{{ item }}'
       with_first_found:
         - ../config.yml
         - defaults/main.yml
-
     - name: Ensure logs directory exists
-      file: 
+      file:
         path: /vagrant/logs
         state: directory
-
     - name: Symlink XHProf display files into web root
       file:
         src: /var/www/lib/xhprof/xhprof-master
         dest: '{{ web_root }}/xhprof'
         state: link
-
     - name: Symlink Kint into web root
       file:
         src: /var/www/lib/kint/kint-master
         dest: '{{ web_root }}/kint'
         state: link
-
     - name: Make sure /etc/apache2/ssl exists
       file:
         path: /etc/apache2/ssl
         state: directory
-
     - name: Generate self-signed ssl cert
       command: >-
         openssl req -new -nodes -x509 -subj "/C=US/ST=NY/L=NY/O=Basic WordPress
         Vagrant/CN={{ site_name or 'basic-wordpress-vagrant' }}" -days 1000
         -keyout /etc/apache2/ssl/basic-wp.key -out /etc/apache2/ssl/basic-wp.crt
       when: use_ssl
-
   tasks:
     - name: Enable xDebug
       command: phpenmod xdebug
