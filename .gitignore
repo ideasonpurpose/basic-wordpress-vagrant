@@ -5,3 +5,4 @@ site/*
 node_modules
 *.retry
 .ip_address
+/logs
