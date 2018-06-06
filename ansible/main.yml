@@ -10,6 +10,10 @@
       with_first_found:
         - ../config.yml
         - defaults/main.yml
+    - name: Ensure site directory exists
+      file:
+        path: /vagrant/site
+        state: directory
     - name: Ensure logs directory exists
       file:
         path: /vagrant/logs
