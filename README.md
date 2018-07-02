@@ -58,7 +58,7 @@ Below are the complete steps necessary to use the Basic WordPress Vagrant Enviro
 1.  Download the Vagrant installer from [vagrantup.com][vagrant] and install Vagrant.
 2.  Download the VirtualBox installer from [virtualbox.org][virtualbox] and install VirtualBox.
 3.  Install the [Hostmanager][vagrant-hostmanager] and [Bind-fs](https://github.com/gael-ian/vagrant-bindfs) plugins by running this command in the terminal:  
-    `vagrant plugin install vagrant-hostmanager vagrant-bind-fs`
+    `vagrant plugin install vagrant-hostmanager vagrant-bindfs`
 
 That's everything, now just follow the [Instructions](#instructions) to spin up your WordPress environment.
 
