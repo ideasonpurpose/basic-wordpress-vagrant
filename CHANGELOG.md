@@ -5,6 +5,7 @@
 - Write logs to /vagrant/logs for easier debugging
 - Update Ansible syntax
 - Check that the site folder exists on clean-slate instantiations
+- Remove placeholder `site` directory
 
 ## 0.5.0
 

@@ -18,9 +18,9 @@ Complete [first-time setup instructions](#complete-one-time-setup-instructions) 
 
 1.  Download the [zip archive](https://github.com/ideasonpurpose/basic-wordpress-vagrant/archive/master.zip) or clone this repo
 2.  Unzip and rename the directory to something like `yoursite.test`
-3.  Add your WordPress project to the `site` directory (or replace `site` with a clone of your WordPress repository)
+3.  For existing projects, clone or copy your site into a `site` directory. New projects will create `site`.
 4.  Optionally copy a MySQL dumpfile into the project directory
-5.  Install plugins: `vagrant plugin install vagrant-hostmanager vagrant-bindfs`
+5.  Install plugins: `vagrant plugin install vagrant-hostmanager` (Mac and Linux users should also install the `vagrant-bindfs` plugin)
 6.  Run `vagrant up`
 
 When the Vagrant environment is provisioned a fresh install of WordPress will be applied to the `site` directory. **Any changes to core files or default themes will be lost.** Those files should really never be changed anyway, and this behavior is deliberate and intentional.
@@ -70,27 +70,27 @@ One of this project's goals is to promote [disposability](http://12factor.net/di
 
 Many custom options can be set in [`config.yml`][config]:
 
-* `wp_download` can be used to install specific WordPress versions.
+- `wp_download` can be used to install specific WordPress versions.
 
-* `install_plugins` toggles automatic installation of missing plugins
+- `install_plugins` toggles automatic installation of missing plugins
 
-* `wp_dir` changes the install location of WordPress, use this to install WordPress into a subdirectory.
+- `wp_dir` changes the install location of WordPress, use this to install WordPress into a subdirectory.
 
-* `wp_content` remaps the `wp-content` directory. Useful for working on roots.io style installations.
+- `wp_content` remaps the `wp-content` directory. Useful for working on roots.io style installations.
 
-* `enable_xdebug` toggles [xDebug][] display
+- `enable_xdebug` toggles [xDebug][] display
 
-* `table_prefix` maps directly to the WordPress Database Table prefix in `wp-config.php`
+- `table_prefix` maps directly to the WordPress Database Table prefix in `wp-config.php`
 
 ## Extras
 
-* Missing WordPress plugins will be installed if they can be found in the [WordPress Plugin Directory](https://wordpress.org/plugins/).
+- Missing WordPress plugins will be installed if they can be found in the [WordPress Plugin Directory](https://wordpress.org/plugins/).
 
-* All settings for [Debugging in WordPress](https://codex.wordpress.org/Debugging_in_WordPress) are enabled.
+- All settings for [Debugging in WordPress](https://codex.wordpress.org/Debugging_in_WordPress) are enabled.
 
-* Save [`vagrant-hostmanager-nopasswd`][sudoers] to `/etc/sudoers.d/` for password-free, host-managed `vagrant up`.
+- Save [`vagrant-hostmanager-nopasswd`][sudoers] to `/etc/sudoers.d/` for password-free, host-managed `vagrant up`.
 
-* File permissions are handled by managed hosts and may differ between projects. To ignore permissions for sites managed with Git, run this in your local repo: `git config core.filemode false`
+- File permissions are handled by managed hosts and may differ between projects. To ignore permissions for sites managed with Git, run this in your local repo: `git config core.filemode false`
 
 ## White Screen of Death?
 
