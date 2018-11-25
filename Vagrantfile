@@ -35,6 +35,25 @@ $version = '?.?.?' if $version.nil? || $version.empty?
 $ansible_config = YAML.load_file('config.yml') if File.file?('config.yml')
 $ansible_config ||= { "use_ssl" => false }
 
+
+if ARGV[0] != 'plugin' && ARGV[0] != 'destroy'
+  required_plugins = %w(vagrant-hostmanager vagrant-bindfs)
+
+  plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
+  if not plugins_to_install.empty?
+
+    puts "Installing plugins: #{plugins_to_install.join(' ')}"
+    if system "vagrant plugin install #{plugins_to_install.join(' ')}"
+      exec "vagrant #{ARGV.join(' ')}"
+    else
+      abort "Installation of one or more plugins has failed. Aborting."
+    end
+
+  end
+end
+
+
+
 Vagrant.configure(2) do |config|
   config.ssh.insert_key = false
   config.vm.box = "ideasonpurpose/basic-wp"
