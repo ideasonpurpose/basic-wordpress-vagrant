@@ -57,7 +57,7 @@ end
 Vagrant.configure(2) do |config|
   config.ssh.insert_key = false
   config.vm.box = "ideasonpurpose/basic-wp"
-  config.vm.box_version = ">= 1.5.0"
+  config.vm.box_version = ">= 1.6.0"
   # config.vm.box = "basic-wp"
   config.vm.hostname = $hostname
   config.vm.define $devDomain

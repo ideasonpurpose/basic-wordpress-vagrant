@@ -1,11 +1,13 @@
 # basic-wordpress-vagrant changelog
 
-## Next
+## 0.6.0
 
 - Write logs to /vagrant/logs for easier debugging
 - Update Ansible syntax
 - Check that the site folder exists on clean-slate instantiations
 - Remove placeholder `site` directory
+- Auto-install Vagrant plugins
+- Bump box version to 1.6.0
 
 ## 0.5.0
 
