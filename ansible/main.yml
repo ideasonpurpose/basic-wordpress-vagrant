@@ -25,7 +25,7 @@
         state: link
     - name: Symlink Kint into web root
       file:
-        src: /var/www/lib/kint/kint-master
+        src: /var/www/lib/kint/
         dest: '{{ web_root }}/kint'
         state: link
     - name: Make sure /etc/apache2/ssl exists
