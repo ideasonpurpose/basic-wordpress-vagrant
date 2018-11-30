@@ -118,7 +118,8 @@ Microsoft Edge on Windows 10 will not load websites from local IP addresses. IE1
 
 ## About
 
-[![iop_logo](https://avatars1.githubusercontent.com/u/2059022?s=100&v=4)][iop]  
+[![iop_logo](https://avatars1.githubusercontent.com/u/2059022?s=100&v=4)][iop]
+
 This project is sponsored by and used in production at [Ideas On Purpose][iop].
 
 [iop]: http://ideasonpurpose.com
