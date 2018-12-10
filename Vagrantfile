@@ -1,6 +1,6 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
-# Version: 0.6.0
+# Version: 0.6.1
 
 # Try reading package.name from ./site/package.json
 begin
