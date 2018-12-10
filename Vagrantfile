@@ -4,55 +4,50 @@
 
 # Try reading package.name from ./site/package.json
 begin
-  $hostname = JSON.parse(File.read(__dir__ + '/site/package.json'))['name']
+  $hostname = JSON.parse(File.read(__dir__ + "/site/package.json"))["name"]
 rescue StandardError
 end
 
 # hostname fallback to 'vagrant' if nil or empty
-$hostname = 'vagrant' if $hostname.nil? || $hostname.empty?
+$hostname = "vagrant" if $hostname.nil? || $hostname.empty?
 
 # clean hostname and add '.test' TLD
 $hostname = $hostname
-            .downcase
-            .gsub(/[^a-z0-9]+/, '-') # sanitize non-alphanumerics to hyphens
-            .gsub(/^-+|-+$/, '')     # strip leading or trailing hyphens
+  .downcase
+  .gsub(/[^a-z0-9]+/, "-") # sanitize non-alphanumerics to hyphens
+  .gsub(/^-+|-+$/, "")     # strip leading or trailing hyphens
 
-$devDomain = $hostname.gsub(/(\.dev|\.test)*$/, '') + '.test'
+$devDomain = $hostname.gsub(/(\.dev|\.test)*$/, "") + ".test"
 
 # Explicitly set $hostname here to override everything above
 # $hostname = "dev.example.test"
 
 # Read version from package.json
 begin
-  $version = JSON.parse(File.read(__dir__ + '/package.json'))['version']
+  $version = JSON.parse(File.read(__dir__ + "/package.json"))["version"]
 rescue StandardError
 end
 
 # Placeholder version if missing, nil or empty
-$version = '?.?.?' if $version.nil? || $version.empty?
+$version = "?.?.?" if $version.nil? || $version.empty?
 
 # Read Ansible config from config.yml, set default for use_ssl
-$ansible_config = YAML.load_file('config.yml') if File.file?('config.yml')
-$ansible_config ||= { "use_ssl" => false }
+$ansible_config = YAML.load_file("config.yml") if File.file?("config.yml")
+$ansible_config ||= {"use_ssl" => false}
 
-
-if ARGV[0] != 'plugin' && ARGV[0] != 'destroy'
+if ARGV[0] != "plugin" && ARGV[0] != "destroy"
   required_plugins = %w(vagrant-hostmanager vagrant-bindfs)
 
   plugins_to_install = required_plugins.select { |plugin| not Vagrant.has_plugin? plugin }
   if not plugins_to_install.empty?
-
-    puts "Installing plugins: #{plugins_to_install.join(' ')}"
-    if system "vagrant plugin install #{plugins_to_install.join(' ')}"
-      exec "vagrant #{ARGV.join(' ')}"
+    puts "Installing plugins: #{plugins_to_install.join(" ")}"
+    if system "vagrant plugin install #{plugins_to_install.join(" ")}"
+      exec "vagrant #{ARGV.join(" ")}"
     else
       abort "Installation of one or more plugins has failed. Aborting."
     end
-
   end
 end
-
-
 
 Vagrant.configure(2) do |config|
   config.ssh.insert_key = false
@@ -62,14 +57,13 @@ Vagrant.configure(2) do |config|
   config.vm.hostname = $hostname
   config.vm.define $devDomain
 
-
-  if Vagrant.has_plugin? 'vagrant-auto_network'
+  if Vagrant.has_plugin? "vagrant-auto_network"
     config.vm.network :private_network, auto_network: true, id: "basic-wordpress-vagrant_#{$hostname}"
   else
     config.vm.network "private_network", type: "dhcp"
   end
 
-  config.vm.synced_folder ".", "/vagrant", owner:"www-data", group:"www-data", mount_options:["dmode=775,fmode=664"]
+  config.vm.synced_folder ".", "/vagrant", owner: "www-data", group: "www-data", mount_options: ["dmode=775,fmode=664"]
 
   config.vm.provider "virtualbox" do |v|
     # v.gui = true  # for debugging
@@ -79,20 +73,20 @@ Vagrant.configure(2) do |config|
     v.customize ["modifyvm", :id, "--name", $devDomain]
     v.customize ["modifyvm", :id, "--ioapic", "on"]
     v.customize ["modifyvm", :id, "--paravirtprovider", "kvm"]
-    v.customize ["modifyvm", :id, "--cableconnected1", 'on']
+    v.customize ["modifyvm", :id, "--cableconnected1", "on"]
   end
 
   config.vm.provision "ansible_local" do |ansible|
     ansible.compatibility_mode = "2.0"
     ansible.playbook = "ansible/main.yml"
     ansible.extra_vars = {
-      site_name: (Vagrant.has_plugin? 'vagrant-hostmanager') ? $devDomain : nil,
+      site_name: (Vagrant.has_plugin? "vagrant-hostmanager") ? $devDomain : nil,
       theme_name: $hostname,
-      vagrant_cwd: File.expand_path(__dir__)
+      vagrant_cwd: File.expand_path(__dir__),
     }
   end
 
-  if Vagrant.has_plugin? 'vagrant-hostmanager'
+  if Vagrant.has_plugin? "vagrant-hostmanager"
     config.vm.provision :hostmanager
     config.hostmanager.enabled = true
     config.hostmanager.manage_host = true
