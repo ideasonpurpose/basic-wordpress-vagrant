@@ -62,19 +62,6 @@ Vagrant.configure(2) do |config|
   config.vm.hostname = $hostname
   config.vm.define $devDomain
 
-  config.vm.post_up_message = Proc.new {
-    ip = File.read(__dir__ + '/.ip_address').strip
-    protocol =  $ansible_config['use_ssl'] ? 'https://' : 'http://'
-    msg  = "    Thank you for using Basic WordPress Vagrant (v#{$version})\n"
-    msg << "    https://github.com/ideasonpurpose/basic-wordpress-vagrant\n\n"
-    msg << "    Local server addresses:\n" if Vagrant.has_plugin? 'vagrant-hostmanager'
-    msg << "        #{ protocol }#{ $devDomain }\n" if Vagrant.has_plugin? 'vagrant-hostmanager'
-    msg << "    Local server address:\n" if not Vagrant.has_plugin? 'vagrant-hostmanager'
-    msg << "        #{ protocol }#{ ip }\n"
-    msg << "-"
-    msg
-  }
-
 
   if Vagrant.has_plugin? 'vagrant-auto_network'
     config.vm.network :private_network, auto_network: true, id: "basic-wordpress-vagrant_#{$hostname}"
@@ -120,4 +107,25 @@ Vagrant.configure(2) do |config|
       ip_addr
     end
   end
+  # Make sure Apache starts up every time
+  config.vm.provision "shell", inline: "service apache2 restart", run: "always"
+
+  # Write the VM's external IP address to /vagrant/.ip_address for use in post_up_message
+  cmd = "VBoxControl --nologo guestproperty get /VirtualBox/GuestInfo/Net/1/V4/IP | cut -f2 -d' ' > /vagrant/.ip_address"
+  config.vm.provision "shell", inline: cmd, run: "always"
+
+  config.vm.post_up_message = Proc.new {
+    begin
+      ip = File.read(__dir__ + "/.ip_address").strip
+    rescue StandardError
+    end
+
+    protocol = $ansible_config["use_ssl"] ? "https://" : "http://"
+    msg = "    Local server addresses:\n" if Vagrant.has_plugin? "vagrant-hostmanager"
+    msg << "        #{protocol}#{$devDomain}\n" if Vagrant.has_plugin? "vagrant-hostmanager"
+    msg << "    Local server address:\n" if not Vagrant.has_plugin? "vagrant-hostmanager"
+    msg << "        #{protocol}#{ip}\n"
+    msg << "-"
+    msg
+  }
 end
