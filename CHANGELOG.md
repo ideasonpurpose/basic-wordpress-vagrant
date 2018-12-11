@@ -1,5 +1,10 @@
 # basic-wordpress-vagrant changelog
 
+## Next
+
+- More explicit handling of VM's IP address
+- Add shell provisioner to make sure Apache starts up every time
+
 ## 0.6.0
 
 - Write logs to /vagrant/logs for easier debugging
