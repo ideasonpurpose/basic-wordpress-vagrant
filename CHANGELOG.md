@@ -4,6 +4,7 @@
 
 - More explicit handling of VM's IP address
 - Add shell provisioner to make sure Apache starts up every time
+- Stop auto-linking Kint, better to install from Composer.
 
 ## 0.6.0
 
