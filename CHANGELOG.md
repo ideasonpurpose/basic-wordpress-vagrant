@@ -1,10 +1,11 @@
 # basic-wordpress-vagrant changelog
 
-## Next
+## 0.7.0
 
 - More explicit handling of VM's IP address
 - Add shell provisioner to make sure Apache starts up every time
-- Stop auto-linking Kint, better to install from Composer.
+- Stop auto-linking Kint, better to install from Composer
+- Switch to running everything locally on the VM
 
 ## 0.6.0
 

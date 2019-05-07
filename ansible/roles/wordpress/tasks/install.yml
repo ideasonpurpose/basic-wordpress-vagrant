@@ -1,7 +1,6 @@
 ---
 
 - name: Make sure local WordPress directory exists
-  become: no
   file: 
     path: '{{ wp_root }}'
     state: directory 
@@ -34,19 +33,15 @@
   register: wp_archive
 
 - name: Extract WordPress archive on remote host
-  become: no
   unarchive: 
     src: '{{ wp_archive.dest }}'
     dest: '{{ wp_src_dir.path }}'
   register: wp_files
 
 - name: 'Pull-sync fresh WordPress onto site directory'
-  become: no
   synchronize: 
     src: '{{ wp_src_dir.path }}/wordpress/'
     dest: '{{ wp_root }}/'
-    mode: pull
-    use_ssh_args: yes
 
 - name: Get master WordPress .gitignore file (if there isn't one already)
   get_url: 

@@ -6,19 +6,6 @@
 
 - set_fact: site_addr={{ site_name or ip_addr.stdout }}
 
-# Workaround for https://github.com/ansible/ansible/issues/9526
-# When Vagrant runs on Windows, the template can't seem to write
-# to the shared folder correctly, regardless of permissions.
-# Writing to /tmp and moving the file works around the problem.
-
-# - name: Write Vagrant defaults to /tmp/wp-config.php
-#   template:
-#     src=wp-config.php.j2
-#     dest=/tmp/wp-config.php
-
-# - name: Move /tmp/wp-config.php to /vagrant/site/wp-config.php
-#   command: cp /tmp/wp-config.php {{ web_root }}/wp-config.php
-
 - name: Get WordPress config salts
   become: no
   uri:
@@ -27,7 +14,6 @@
   register: wp_salts
 
 - name: Write Vagrant defaults to wp-config.php
-  become: no
   template:
     src: wp-config.php.j2
     dest: '{{ wp_root }}/wp-config.php'
@@ -42,7 +28,6 @@
 
 
 - name: Write wp-cli config
-  become: no
   template:
     src: wp-cli-config.yml.j2
     dest: '/home/{{ ansible_user }}/.wp-cli/config.yml'
