@@ -79,6 +79,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "ansible_local" do |ansible|
     ansible.compatibility_mode = "2.0"
     ansible.playbook = "ansible/main.yml"
+    # ansible.verbose = "vvvv"
     ansible.extra_vars = {
       site_name: (Vagrant.has_plugin? "vagrant-hostmanager") ? $devDomain : nil,
       theme_name: $hostname,

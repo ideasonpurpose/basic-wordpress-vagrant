@@ -26,7 +26,6 @@
     owner: vagrant
     group: vagrant
 
-
 - name: Write wp-cli config
   template:
     src: wp-cli-config.yml.j2
